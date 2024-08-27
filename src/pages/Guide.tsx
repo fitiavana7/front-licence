@@ -1,0 +1,39 @@
+import { Badge, Card } from 'antd';
+import React from 'react';
+
+const Guide = () => {
+    return (
+        <>
+            <Card className='my-3'>
+                <div className='flex items-center'>
+                    <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>01</span>
+                    <p className='font-bold text-lg ml-2'>Créer des salariés</p>
+                </div>
+                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+            </Card>
+            <Card className='my-3'>
+                <div className='flex items-center'>
+                    <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>02</span>
+                    <p className='font-bold text-lg ml-2'>Créer des metiers</p>
+                </div>
+                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+            </Card>
+            <Card className='my-3'>
+                <div className='flex items-center'>
+                    <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>03</span>
+                    <p className='font-bold text-lg ml-2'>Configurer le salaire d'un salarié</p>
+                </div>
+                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+            </Card>
+            <Card className='my-3'>
+                <div className='flex items-center'>
+                    <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>04</span>
+                    <p className='font-bold text-lg ml-2'>Payer son salaire</p>
+                </div>
+                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+            </Card>
+        </>
+    );
+};
+
+export default Guide;

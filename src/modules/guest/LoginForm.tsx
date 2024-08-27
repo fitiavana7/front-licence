@@ -1,12 +1,15 @@
 import React, { FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../../components/data/backend';
-import Button from '../../components/ui/Button';
+import { ControlledInput, ControlledInputPassword } from '../../components/ui/ControlledInput';
 import Loader from '../../components/ui/Loader';
 import { inputStyles, showRequestError, showSuccessMessage } from '../../helpers';
 import useAuth from '../../hooks/useAuth';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ILogin } from '../../types';
+import { Button } from 'antd';
+import { FaSignInAlt } from 'react-icons/fa';
+import { FiLock, FiMail } from 'react-icons/fi';
 
 const LoginForm = () => {
 
@@ -14,39 +17,39 @@ const LoginForm = () => {
     const [mdp , setMdp] = useState<string>('')
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
-    const {login} = useAuth()
-    const navigate = useNavigate()
-    const { setUser} = useCurrentUser()
+    const [mailError , setMailError] = useState<string>('')
+    const [mdpError , setMdpError] = useState<string>('')
 
-    function handleChange(e:any , inputName : string) {
-        switch (inputName) {
-            case 'mail':
-                setMail(e.target.value)
-                break;
-            case 'mdp':
-                setMdp(e.target.value);
-                break;
-            default:
-                break;
-        }
-    }
+    const {login , getCurrentUser} = useAuth()
+    const navigate = useNavigate()
+    const { setUser } = useCurrentUser()
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        const submitData : ILogin = {
-            mail , password : mdp 
-        }
-        setIsLoading(true)
-        login(submitData).then((e:any)=>{
-            localStorage.setItem(TOKEN_KEY , e.data.token)
-            showSuccessMessage('Connexion reussie')
-            setIsLoading(false)
-            navigate('/' , {replace : true})
+        const mailErr = mail.length < 2 || mail.length > 50
+        setMailError(mailErr?'mail invalide' : '') 
+        const pwdErr = mdp.length < 6 
+        setMdpError(pwdErr ?'le mot de passe doit contenir au moins 6 caractères' : '')
 
-        }).catch((e:any)=> {
-            showRequestError("Identifiants incorrects")
-            setIsLoading(false)
-        })
+        const invalid = mailErr || pwdErr
+        if(!invalid){
+            const submitData : ILogin = {
+                mail , password : mdp 
+            }
+            setIsLoading(true)
+            login(submitData).then(async(e:any)=>{
+                localStorage.setItem(TOKEN_KEY , e.data.token)
+                const req = await getCurrentUser()
+                setUser(req)
+                showSuccessMessage('Connexion reussie')
+                setIsLoading(false)
+                navigate('/' , {replace : true})
+
+            }).catch((e:any)=> {
+                showRequestError("Identifiants incorrects")
+                setIsLoading(false)
+            })
+        }
     }
 
     return (
@@ -55,29 +58,33 @@ const LoginForm = () => {
                 isLoading && <Loader/>
             }
             <form action="" onSubmit={handleSubmit}>
-                <h2 className='font-bold'>Mail :</h2>
-                <input 
-                    type="text"
-                    onChange={(e)=> handleChange(e,'mail')}
-                    className={inputStyles()}
-                    placeholder='mail'
+                <ControlledInput
+                    label='Mail:'
+                    value={mail}
+                    placeholder='adrèsse mail'
+                    onChange={setMail}
+                    errorMessage={mailError} 
+                    icon={<FiMail/>}
+
                 />
-                <span className='text-xs text-red-500'>mail invalide</span>
-                <h2 className='font-bold'>Mot de passe :</h2>
-                <input 
-                    type="password"
-                    onChange={(e)=> handleChange(e,'mdp')}
-                    className={inputStyles()}
+                <ControlledInputPassword
+                    label='Mot de passe:'
+                    value={mdp}
                     placeholder='mot de passe'
+                    onChange={setMdp}
+                    errorMessage={mdpError} 
+                    icon={<FiLock/>}
+
                 />
-                <span className='text-xs text-red-500'>mot de passe invalide</span>
                 <div className='flex justify-end items-center py-5'>
-                    <Button  actionType='submit' onClick={()=>{}} label='se connecter' type='primary'  />
+                <Button onClick={handleSubmit} type='primary' className={`py-1 px-2 bg-blue-500 flex items-center`}>
+                    <FaSignInAlt className='mr-2'/> connecter
+                </Button>
                 </div>
             </form>
             <div>
                 <NavLink to='/register'>
-                    <h3 className='text-center'>creer une compte</h3>
+                    <h3 className='text-center text-slate-700 hover:underline'>creer une compte</h3>
                 </NavLink>
             </div>
 

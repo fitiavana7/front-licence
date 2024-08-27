@@ -4,7 +4,7 @@ import { ICompany, ILogin } from "../types";
 
 export default function useAuth() {
     
-    return {register , login , getCurrentUser}
+    return {register , login , getCurrentUser,getStat}
 
     function register(data : ICompany) {
         return axios.post(`${AUTH_URL}/register`,data)
@@ -20,5 +20,8 @@ export default function useAuth() {
         const res = await axios.get(`${AUTH_URL}/verify/${token}`)
         const user = await axios.get(`${AUTH_URL}/${res.data._id}`)
         return user.data
+    }
+    function getStat(id : string) {
+        return axios.get(`${AUTH_URL}/stat/${id}`)
     }
 }

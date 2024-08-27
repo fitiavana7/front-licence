@@ -2,14 +2,13 @@ import React, { FormEvent, useState } from 'react';
 import { inputStyles, showRequestError, showSuccessMessage } from '../../../helpers';
 import useMetier from '../../../hooks/useMetier';
 import { IMetier } from '../../../types';
-import { FaBriefcase } from 'react-icons/fa'
+import {FaBriefcase} from 'react-icons/fa'
 import { ControlledInput, ControlledInputNumber, ControlledSelect, ControlledTextarea } from '../../../components/ui/ControlledInput';
 import { FiEdit2, FiMessageSquare, FiSave } from 'react-icons/fi';
 import { Card } from 'antd';
 
-interface ModifyMetierModalPropsType {
-    close : ()=> void , 
-    metier : IMetier
+interface CreateMetierModalPropsType {
+    close : ()=> void
 }
 
 const directionSelectData = [
@@ -23,17 +22,17 @@ const directionSelectData = [
     }
 ]
 
-const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}) => {
+const NewMetierModal : React.FC<CreateMetierModalPropsType> = (props) => {
+    const {close} = props
 
-    
-    const {update} = useMetier()
-    const [titre , setTitre] = useState<string>(metier.title)
-    const [isInDirection , SetIsInDirection] = useState<string>(metier.isInDirection)
-    const [description , setDescription] = useState<string>(metier.description)
+    const {create} = useMetier()
+    const [titre , setTitre] = useState<string>('')
+    const [description , setDescription] = useState<string>('')
+    const [isInDirection , SetIsInDirection] = useState<string>('oui')
     const [titreError , setTitreError] = useState<string>('')
     const [descriptionError , setDescriptionError] = useState<string>('')
 
-    const handleSubmit = (e : FormEvent) =>{
+    function handleSubmit(e: FormEvent) {
         e.preventDefault()
         const titErr = titre.length < 2 || titre.length > 50 
         setTitreError(titErr ?'titre invalide' : '')
@@ -43,24 +42,25 @@ const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}
         const invalid = titErr || descErr
         if(!invalid){
             const data : IMetier = {
-                title : titre, description , isInDirection
+                title : titre , description, isInDirection
             }
-            update(metier._id || '', data).then((e:any)=>{
+            create(data).then((e:any)=>{
                 showSuccessMessage()
                 close()
             }).catch((err:any)=> showRequestError())
         }
     }
+
     return (
     <>
         <div className='z-50 w-full h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>
-            <Card className='animate-fadeIn w-1/2 text-black bg-fond' onClick={(e : any)=>e.stopPropagation()}>
+            <Card className='w-1/2 bg-fond animate-fadeIn' onClick={(e : any)=>e.stopPropagation()}>
                 <div className='flex justify-center text-primary items-center'>
                     <FaBriefcase className='text-xl mr-2'/>
-                    <h4 className='font-bold text-xl'>MODIFICATION METIER</h4>
+                    <h4 className='font-bold text-xl'>AJOUT D'UN NOUVEAU METIER</h4>
                 </div>
                 <form method='post' onSubmit={handleSubmit} className='mt-5'>
-                    <ControlledInput
+                    <ControlledInput 
                         label='Titre du metier :'
                         onChange={setTitre}
                         value={titre}
@@ -71,7 +71,7 @@ const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}
                     />
                     <ControlledSelect
                         label='Metier dans le direction:'
-                        value={String(isInDirection)}
+                        value={isInDirection}
                         onChange={SetIsInDirection}
                         options={directionSelectData}
                     />
@@ -86,18 +86,17 @@ const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}
                     />
                     <div className='flex justify-end items-center'>
                         <button 
-                            type='submit' 
-                            className='text-sm flex hover:bg-green-600 justify-center items-center text-white border bg-green-500 px-3 py-1 rounded-md'
+                            className='text-sm flex justify-center hover:bg-green-600 items-center text-white border bg-green-500 px-3 py-1 rounded-md'
+                            type='submit'
                         >
-                            <FiSave /> <span className='ml-1'>enregistrer</span>
-                        </button>
+                            <FiSave /> <span className='ml-1'>créer</span>
+                        </button>                        
                     </div>
                 </form>
-
             </Card>
         </div>
     </>
     );
 };
 
-export default EditMetierModal;
+export default NewMetierModal;

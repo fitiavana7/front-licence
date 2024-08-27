@@ -1,56 +1,37 @@
 import React, { FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../../components/data/backend';
-import Button from '../../components/ui/Button';
-import { InputControlled } from '../../components/ui/InputControlled';
 import { inputStyles, showRequestError, showSuccessMessage } from '../../helpers';
 import useAuth from '../../hooks/useAuth';
 import { Stepper , Step } from 'react-form-stepper'
-import { FaAngleLeft, FaAngleRight, FaBuilding, FaPlus } from 'react-icons/fa' 
+import { FaAngleLeft, FaAngleRight, FaBuilding, FaPlus, FaSave, FaUserEdit } from 'react-icons/fa' 
 import { ICompany } from '../../types';
+import { ControlledDatePicker, ControlledInput, ControlledInputPassword } from '../../components/ui/ControlledInput';
+import { Button } from 'antd';
+import { FiCalendar, FiEdit2, FiLock, FiMail, FiMap, FiPhone } from 'react-icons/fi';
 
 const RegisterForm = () => {
 
     const [phone , setPhone] = useState<string>('')
     const [lieu , setLieu] = useState<string>('')
     const [nom , setNom] = useState<string>('')
-    const [creation , setCreation] = useState<string>('')
+    const [creationDate , setCreationDate] = useState<Date>(new Date())
     const [mail , setMail] = useState<string>('')
     const [mdp , setMdp] = useState<string>('')
     const [mdp2 , setMdp2] = useState<string>('')
+
+    const [phoneError , setPhoneError] = useState<string>('')
+    const [lieuError , setLieuError] = useState<string>('')
+    const [nomError , setNomError] = useState<string>('')
+    const [creationDateError , setCreationDateError] = useState<string>('')
+    const [mailError , setMailError] = useState<string>('')
+    const [mdpError , setMdpError] = useState<string>('')
+    const [mdp2Error , setMdp2Error] = useState<string>('')
 
     const [activeStep , setActiveStep] = useState<number>(0)
 
     const {register} = useAuth()
     const navigate = useNavigate()
-
-    function handleChange(e:any , inputName : string) {
-        switch (inputName) {
-            case 'nom':
-                setNom(e.target.value)
-                break; 
-            case 'phone':
-                setPhone(e.target.value)
-                break; 
-            case 'lieu':
-                setLieu(e.target.value)
-                break; 
-            case 'creation':
-                setCreation(e.target.value)
-                break;         
-            case 'mail':
-                setMail(e.target.value)
-                break;
-            case 'mdp':
-                setMdp(e.target.value);
-                break;
-            case 'mdp2':
-                setMdp2(e.target.value);
-                break;
-            default:
-                break;
-        }
-    }
 
     function changeStep(type : string) {
         if(type === 'prev' ){
@@ -62,44 +43,63 @@ const RegisterForm = () => {
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        const data : ICompany = {
-            mail , password : mdp , location : lieu , creationDate : creation ,
-            name : nom , phone 
+        const phoneErr = phone.length != 12  
+        setPhoneError(phoneErr ?'téléphone invalide' : '')
+        const lieuErr = lieu.length < 2 && lieu.length > 50 
+        setLieuError(lieuErr? 'location invalide' : '') 
+        const nomErr = nom.length < 3 || nom.length > 100 
+        setNomError(nomErr? 'nom invalide' : '') 
+        const crdErr = false
+        setCreationDateError(crdErr?'date invalide' : '') 
+        const mailErr = mail.length < 2 || mail.length > 50
+        setMailError(mailErr?'mail invalide' : '') 
+        const pw1Err = mdp.length < 6 
+        setMdpError(pw1Err?'le mot de passe doit contenir au moins 6 caractères' : '') 
+        const pw2Err = mdp !== mdp2
+        setMdp2Error(pw2Err?'le mot de passe doit être identique' : '') 
+
+        if(phoneErr || mailErr){setActiveStep(0)}
+        else{ if(nomErr || lieuErr || crdErr){setActiveStep(1)}
+        else{if(pw1Err || pw2Err){setActiveStep(2)}}}
+
+        const invalid = nomErr || phoneErr || lieuErr || crdErr || mailErr || pw1Err || pw2Err
+        
+        if(!invalid){
+            const data : ICompany = {
+                mail , password : mdp , location : lieu , creationDate ,
+                name : nom , phone 
+            }
+            register(data).then((e:any)=>{
+                showSuccessMessage('Compte creé avec reussie')
+                localStorage.setItem(TOKEN_KEY , e.data.token)
+                navigate('/' , {replace : true})
+            }).catch((e:any)=> showRequestError(e.response.data.message))
         }
-        register(data).then((e:any)=>{
-            showSuccessMessage('Compte creé avec reussie')
-            localStorage.setItem(TOKEN_KEY , e.data.token)
-            navigate('/' , {replace : true})
-        }).catch((e:any)=> showRequestError(e.response.data.message))
     }
 
     return (
         <div className='w-full'>
-            <form action="" onSubmit={handleSubmit} className='pt-8 pb-2 h-56'>
+            <form action="" onSubmit={handleSubmit} className='pt-8 pb-2 h-80'>
                 {
                     activeStep == 0 && (
                         <>
-                        <div>
-                            <h2 className='font-bold'>Téléphone :</h2>
-                            <input 
-                                type="text"
-                                value={phone}
-                                onChange={(e)=> handleChange(e,'phone')}
-                                className={inputStyles()}
-                                placeholder='phone'
-                            />
-                        </div>
-                        <div>
-                            <h2 className='font-bold'>Mail :</h2>
-                            <input 
-                                type="text"
-                                value={mail}
-                                onChange={(e)=> handleChange(e,'mail')}
-                                className={inputStyles()}
-                                placeholder='mail'
-                            />
-                            <span className='text-xs text-red-500'>username invalide</span>
-                        </div>
+                        <ControlledInput 
+                          label='Téléphone:'
+                          value={phone}
+                          placeholder='téléphone'
+                          onChange={setPhone}
+                          errorMessage={phoneError} 
+                          icon={<FiPhone/>}
+
+                        />
+                        <ControlledInput 
+                          label='Mail:'
+                          value={mail}
+                          placeholder='adrèsse mail'
+                          onChange={setMail}
+                          errorMessage={mailError} 
+                          icon={<FiMail/>}
+                        />
                     </>    
                     )
                 }
@@ -107,65 +107,58 @@ const RegisterForm = () => {
                 {
                     activeStep == 1 && (
                         <>
-                        <div>
-                            <h2 className='font-bold'>Nom de l'entreprise :</h2>
-                            <input 
-                                type="text"
-                                value={nom}
-                                onChange={(e)=> handleChange(e,'nom')}
-                                className={inputStyles()}
-                                placeholder='nom'
-                            />
-                        </div>
-                        <div>
-                            <h2 className='font-bold'>Lieu :</h2>
-                            <input 
-                                type="text"
-                                value={lieu}
-                                onChange={(e)=> handleChange(e,'lieu')}
-                                className={inputStyles()}
-                                placeholder='lieu'
-                            />
-                            <span className='text-xs text-red-500'>username invalide</span>
-                        </div>
-                        <div>
-                            <h2 className='font-bold'>Date de creation :</h2>
-                            <input 
-                                type="date" 
-                                name="" className={inputStyles()} 
-                                onChange={(e)=> handleChange(e,'creation')}
-                                value={creation}
-                            />
-                            <span className='text-xs text-red-500'>username invalide</span>
-                        </div>
+                        <ControlledInput 
+                          label="Nom de l'entreprise:"
+                          value={nom}
+                          placeholder='nom'
+                          onChange={setNom}
+                          errorMessage={nomError} 
+                          icon={<FiEdit2/>}
+
+                        />
+                        <ControlledInput 
+                          label='Location:'
+                          value={lieu}
+                          placeholder='lieu'
+                          onChange={setLieu}
+                          errorMessage={lieuError} 
+                          icon={<FiMap/>}
+                        />
+                        <ControlledDatePicker 
+                          label='Date de création:'
+                          value={''}
+                          onChange={setCreationDate}
+                          errorMessage={creationDateError} 
+                          icon={<FiCalendar/>}
+                        />
                         </>
                     )
                 }
                 {
                     activeStep == 2 && (
                         <>
-                            <div>
-                                <h2 className='font-bold'>Mot de passe :</h2>
-                                <input 
-                                    type="password"
-                                    onChange={(e)=> handleChange(e,'mdp')}
-                                    className={inputStyles()}
-                                    placeholder='mot de passe'
-                                />
-                            </div>
-                            <div>
-                                <h2 className='font-bold'>Retaper mot de passe :</h2>
-                                <input 
-                                    type="password"
-                                    onChange={(e)=> handleChange(e,'mdp2')}
-                                    className={inputStyles()}
-                                    placeholder='confirmer mot de passe'
-                                />
-                            </div>                        
+                            <ControlledInputPassword
+                                label='Mot de passe:'
+                                value={mdp}
+                                placeholder='mot de passe'
+                                onChange={setMdp}
+                                errorMessage={mdpError} 
+                                icon={<FiLock/>}
+                            />
+                            <ControlledInputPassword
+                                label='Confirmer mot de passe:'
+                                value={mdp2}
+                                placeholder='mot de passe'
+                                onChange={setMdp2}
+                                errorMessage={mdp2Error} 
+                                icon={<FiLock/>}
+
+                            />
                             <div className='flex justify-end items-center py-5'>
-                                <button type='submit' className='text-lg flex justify-center items-center text-blue-500 border border-blue-500 p-1 rounded-md'>
-                                    <FaBuilding /> <span className='ml-1'>créer</span>
-                                </button>
+                                <Button onClick={handleSubmit} type='primary' className={`py-1 px-2 bg-blue-500 flex items-center`}>
+                                    <FaUserEdit className='mr-2'/> créer le compte
+                                </Button>
+
                             </div>
                         </>
                     )
@@ -179,14 +172,14 @@ const RegisterForm = () => {
                     <FaAngleRight />
                 </button>
             </div>
-            <Stepper activeStep={activeStep}>
+            <Stepper activeStep={activeStep} >
                 <Step key={0} label='Informations du compte' />
                 <Step key={1} label="Informations de l'entreprise" />
                 <Step key={2} label='Mot de passe' />
             </Stepper>
             <div>
                 <NavLink to='/login'>
-                    <h3 className='text-center'>j'ai dejà une compte</h3>
+                    <h3 className='text-center text-slate-700 hover:underline'>j'ai dejà une compte</h3>
                 </NavLink>
             </div>
 

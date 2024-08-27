@@ -6,7 +6,7 @@ import { useCurrentUser } from "./useCurrentUser";
 export default function useMetier() {
     
     const { user} = useCurrentUser()
-    return {create , update, deleteOne, getAll}
+    return {create , update, deleteOne, getAll ,getById}
 
     function create(data : IMetier) {
         return axios.post(`${METIER_URL}/create/${user?._id}`,data)
@@ -19,9 +19,16 @@ export default function useMetier() {
         })
     }
 
+    function getById(id : string) {
+        const token = localStorage.getItem(TOKEN_KEY)
+        return axios.get(`${METIER_URL}/${id}` , {
+            headers : { Authorization: `Bearer ${token}` }
+        })
+    }
+
     function update (id : string , data : IMetier){
         const token = localStorage.getItem(TOKEN_KEY)
-        return axios.put(`${METIER_URL}/${id}` , data , {
+        return axios.put(`${METIER_URL}/update/${id}` , data , {
             headers : { Authorization: `Bearer ${token}` }
         })        
     }

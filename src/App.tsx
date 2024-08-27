@@ -7,6 +7,9 @@ import { createContext, lazy, Suspense, useEffect, useState } from 'react';
 import Loader from './components/ui/Loader';
 import { ICompany, IEmployee } from './types';
 import { TOKEN_KEY } from './components/data/backend';
+import Guide from './pages/Guide';
+import LeavingEmployees from './pages/LeavingEmployees';
+import CurrentEmployees from './pages/CurrentEmployees';
 
 const Dashboard = lazy(()=> import('./pages/Dashboard'))
 const Metiers = lazy(()=> import('./pages/Metiers'))
@@ -53,12 +56,36 @@ const App  = () => {
                   <Suspense fallback={<Loader/>}>
                     <Salaries/>
                   </Suspense>
+                }>
+                  <Route path='current' element={
+                      <CurrentEmployees/>
+                  } />
+                  <Route path='leaved' element={
+                      <LeavingEmployees/>
+                  } />
+                  </Route>
+
+                <Route path='/employees/current' element={
+                  <Suspense fallback={<Loader/>}>
+                    <Salaries/>
+                  </Suspense>
+                } />
+                <Route path='/employees/leaved' element={
+                  <Suspense fallback={<Loader/>}>
+                    <LeavingEmployees/>
+                  </Suspense>
                 } />
                 <Route path='/metiers' element={
                   <Suspense fallback={<Loader/>}>
                     <Metiers/>
                   </Suspense>
                 } />
+                <Route path='/guides' element={
+                  <Suspense fallback={<Loader/>}>
+                    <Guide/>
+                  </Suspense>
+                } />
+
                 <Route path='/employee/:id' element={
                   <Suspense fallback={<Loader/>}>
                     <EmployeeDetail/>

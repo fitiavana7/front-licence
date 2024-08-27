@@ -6,8 +6,25 @@ export interface sideRoutesType{
 export interface IMetier {
     _id? : string ,
     title : string ,
-    salary : number ,
-    description : string 
+    description : string ,
+    isInDirection  : string
+}
+
+export interface IPayment {
+    _id? : string ,
+    workId : string ,
+    employeeId : string,
+    companyId : string,
+    paymentDate : Date,
+    amount : number ,
+    commentaire : string ,
+    title : string ,
+    haveMoins : boolean ,
+    moins : number,
+    moinsDescription : string,
+    havePlus : boolean ,
+    plus : number,
+    plusDescription : string,
 }
 
 export interface IEmployee {
@@ -19,7 +36,10 @@ export interface IEmployee {
     adress : string,
     phone : string,
     matrimoniale : string ,
-    mail : string
+    mail : string ,
+    hiringDate? : Date ,
+    leavingDate? : Date ,
+    isCurrentEmployee : boolean
 }
 
 export interface ILogin {
@@ -32,7 +52,7 @@ export interface ICompany {
     name : string ,
     location : string ,
     phone : string ,
-    creationDate : string ,
+    creationDate : Date ,
     mail : string ,
     password? : string
 }
@@ -42,7 +62,7 @@ export interface ISalary {
     userId : string ,
     employeeId : string ,
     workId : string ,
-    applicationDate : string ,
+    applicationDate : Date ,
     amount : number ,
-    description : string
+    description : string,
 }

@@ -1,13 +1,10 @@
 import axios from 'axios'
 import { SALARY_URL, TOKEN_KEY } from '../components/data/backend'
 import { ISalary } from '../types'
-import { useCurrentUser } from './useCurrentUser'
 
 export default function useSalary(){
 
-    const {user} = useCurrentUser()
-
-    return { createSalary , getAll , getByEmployee , getById , getByWork }
+    return { createSalary , getAll , getByEmployee , getById , getByWork , getCurrentSalary }
 
     function createSalary(data : ISalary) {
         const token = localStorage.getItem(TOKEN_KEY)
@@ -28,6 +25,14 @@ export default function useSalary(){
             headers : { Authorization: `Bearer ${token}` }
         })
     }
+
+    function getCurrentSalary(id : string) {
+        const token = localStorage.getItem(TOKEN_KEY)
+        return axios.get(`${SALARY_URL}/employee/get-current/${id}`, {
+            headers : { Authorization: `Bearer ${token}` }
+        })
+    }
+
     function getByWork(id : string) {
         const token = localStorage.getItem(TOKEN_KEY)
         return axios.get(`${SALARY_URL}/work/${id}`, {
@@ -36,10 +41,8 @@ export default function useSalary(){
     }
     function getById(id:string) {
         const token = localStorage.getItem(TOKEN_KEY)
-        return axios.get(`${SALARY_URL}/${user?._id}`,{
+        return axios.get(`${SALARY_URL}/${id}`,{
             headers : { Authorization: `Bearer ${token}` }
         })
     }
-
-
 }

@@ -9,7 +9,7 @@ export function showSuccessMessage(msg? : string) {
 }
 
 export function inputStyles(params?:string) {
-    return `p-1 rounded-md outline-none w-full focus:outline-blue-500 ${params}`
+    return `p-1 rounded-md outline-none focus:outline-blue-500 ${params}`
 }
 
 export function axiosInstance(url : string) {
