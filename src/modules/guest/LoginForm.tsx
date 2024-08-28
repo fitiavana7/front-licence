@@ -10,6 +10,7 @@ import { ILogin } from '../../types';
 import { Button } from 'antd';
 import { FaSignInAlt } from 'react-icons/fa';
 import { FiLock, FiMail } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
 
@@ -41,19 +42,18 @@ const LoginForm = () => {
                 localStorage.setItem(TOKEN_KEY , e.data.token)
                 const req = await getCurrentUser()
                 setUser(req)
-                showSuccessMessage('Connexion reussie')
+                toast.success("Connection reussie")
                 setIsLoading(false)
                 navigate('/' , {replace : true})
 
             }).catch((e:any)=> {
-                showRequestError("Identifiants incorrects")
-                setIsLoading(false)
+                toast.error("Identifiants incorrects")
             })
         }
     }
 
     return (
-        <div className='w-full'>
+        <div className='w-full bg-fond'>
             {
                 isLoading && <Loader/>
             }

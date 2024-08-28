@@ -1,11 +1,12 @@
 import { message } from 'antd';
+import { toast } from 'react-toastify';
 
 export function showRequestError(msg? : string){
-    message.error(msg || 'Erreur lors de la requette...')
+    toast.error(msg || 'Erreur lors de la requette...')
 }
 
 export function showSuccessMessage(msg? : string) {
-    message.success(msg || 'Requette reussie')
+    toast.success(msg || 'Requette reussie')
 }
 
 export function inputStyles(params?:string) {

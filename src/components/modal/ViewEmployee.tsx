@@ -6,8 +6,6 @@ import { IEmployee } from '../../types';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
-import { ToastContainer, toast } from "react-toastify";
-
 interface EditEmployeePropsType {
     close : ()=> void ,
     employee : IEmployee
@@ -15,7 +13,6 @@ interface EditEmployeePropsType {
 
 const ViewEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
     const {close , employee} = props
-    toast.success("Success Notification !");    
     return (
         <>
         <div className='z-50 w-full min-h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>

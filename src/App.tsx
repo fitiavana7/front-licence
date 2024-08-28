@@ -10,6 +10,7 @@ import { TOKEN_KEY } from './components/data/backend';
 import Guide from './pages/Guide';
 import LeavingEmployees from './pages/LeavingEmployees';
 import CurrentEmployees from './pages/CurrentEmployees';
+import Acceuil from './pages/Acceuil';
 
 const Dashboard = lazy(()=> import('./pages/Dashboard'))
 const Metiers = lazy(()=> import('./pages/Metiers'))
@@ -38,7 +39,7 @@ const App  = () => {
       <UserContext.Provider value={{ user, setUser, logout }}>
         <Routes>
           <Route path='' element={<Layout/>}>
-  
+        
            //for connected users
             <Route path='' element={<ConnectedLayout/>}>
               <Route path='' element={<AuthGuard/>}>
@@ -107,6 +108,11 @@ const App  = () => {
                 </Suspense>  
                 } />
             </Route>
+            <Route path='/acceuil' element={
+              <Suspense fallback={<Loader/>}>
+                <Acceuil/>
+              </Suspense>  
+            } />
           </Route>
         </Routes>
       </UserContext.Provider>

@@ -1,36 +1,51 @@
 import { Badge, Card } from 'antd';
 import React from 'react';
+import { FiInfo } from 'react-icons/fi';
 
 const Guide = () => {
     return (
         <>
+            <div className='flex justify-between items-center w-full py-3'>
+                <h3 className='text-lg flex items-center font-bold text-primary'>
+                    <FiInfo  className='mr-2'/>    
+                    GUIDES D'UTILISATION
+                </h3>
+            </div>
             <Card className='my-3'>
                 <div className='flex items-center'>
                     <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>01</span>
                     <p className='font-bold text-lg ml-2'>Créer des salariés</p>
                 </div>
-                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+                <p className='text-justify py-2'>
+                    Créer un salarié dans notre application est simple et rapide. Il vous suffit de renseigner les informations essentielles telles que le nom, le poste, le salaire, et les avantages. En quelques clics, votre nouveau salarié est ajouté, et vous pouvez immédiatement gérer ses fiches de paie, ses congés, et ses retenues, tout en assurant une gestion précise et conforme.
+                </p>                
             </Card>
             <Card className='my-3'>
                 <div className='flex items-center'>
                     <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>02</span>
                     <p className='font-bold text-lg ml-2'>Créer des metiers</p>
                 </div>
-                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+                <p className='text-justify py-2'>
+                    Créer des métiers dans notre application est simple et flexible. Vous pouvez définir le titre du métier, indiquer s'il s'agit d'un poste de direction, et ajouter une description détaillée. Cette fonctionnalité vous permet de structurer efficacement les rôles au sein de votre entreprise, tout en offrant une clarté maximale sur les responsabilités et les attentes liées à chaque métier.
+                </p>
             </Card>
             <Card className='my-3'>
                 <div className='flex items-center'>
                     <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>03</span>
                     <p className='font-bold text-lg ml-2'>Configurer le salaire d'un salarié</p>
                 </div>
-                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+                <p className='text-justify py-2'>
+                    La configuration des salaires dans notre application est précise et personnalisable. Pour chaque salarié, vous pouvez définir son métier, la valeur de son salaire, la date de changement de salaire, ainsi que d'autres paramètres essentiels. Cette flexibilité vous permet de gérer les évolutions salariales avec facilité, en assurant une mise à jour rapide et précise des informations pour chaque employé.
+                </p>
             </Card>
             <Card className='my-3'>
                 <div className='flex items-center'>
                     <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>04</span>
                     <p className='font-bold text-lg ml-2'>Payer son salaire</p>
                 </div>
-                <p className='text-justify py-2'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione laborum deserunt sunt rerum! Officia numquam quo, vero ratione quibusdam architecto reiciendis dicta quae illo, laboriosam maxime consequuntur consectetur nemo veritatis qui asperiores cumque excepturi dolore doloremque debitis quas. Optio nemo odit temporibus! Sapiente maxime error consequatur soluta dignissimos minus doloremque odit ut ea nemo, debitis voluptate, hic porro veniam placeat, repellendus magni fugiat facilis inventore eveniet. Quis, ipsam dolore. Unde quasi dolor porro voluptatibus? Ex explicabo eius nesciunt dolore quisquam accusantium. Blanditiis vel a eum, ea repudiandae culpa omnis dignissimos quis perferendis incidunt excepturi reprehenderit voluptatibus earum quos mollitia soluta quae voluptatum ex minima illo aliquid atque magni nesciunt! Assumenda dolorem animi sit modi, deleniti ducimus molestiae reiciendis velit! Molestiae sed, iusto consequuntur labore eum nemo ducimus odit veniam laboriosam placeat cum molestias. Quisquam facilis nisi voluptatem nesciunt alias enim itaque? Rem nulla suscipit, excepturi iure culpa asperiores ratione sequi in cupiditate rerum quas sint, natus facilis ducimus! Nisi nobis accusamus sint numquam consequatur reprehenderit facilis veniam odit voluptatibus quidem, deleniti quaerat, unde libero fugiat corporis nostrum architecto enim similique soluta! Totam autem omnis deserunt, repellendus, inventore quos ullam nam quaerat distinctio tempore esse, assumenda accusamus. Rerum totam quo modi!</p>
+                <p className='text-justify py-2'>
+                    Lors du paiement des salaires dans notre application, vous pouvez facilement indiquer s'il y a un décaissement, en précisant sa valeur et une description. De même, pour les primes ou bonus, vous pouvez ajouter un titre et une description du paiement. Cette fonctionnalité vous permet de suivre précisément toutes les transactions financières liées à chaque salarié, en assurant une gestion claire et transparente.
+                </p>
             </Card>
         </>
     );

@@ -19,3 +19,14 @@ body {
 .animate-fadeIn {
   animation: fadeIn 1s forwards;
 }
+
+.acceuil{
+  background: url('../public/home.jpg') ;
+  background-size: cover;
+}
+
+.home{
+  background: url('../public/bg.jpg') ;
+  background-size: cover;
+}
+

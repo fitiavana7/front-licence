@@ -9,6 +9,8 @@ import { ICompany } from '../../types';
 import { ControlledDatePicker, ControlledInput, ControlledInputPassword } from '../../components/ui/ControlledInput';
 import { Button } from 'antd';
 import { FiCalendar, FiEdit2, FiLock, FiMail, FiMap, FiPhone } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 const RegisterForm = () => {
 
@@ -30,8 +32,9 @@ const RegisterForm = () => {
 
     const [activeStep , setActiveStep] = useState<number>(0)
 
-    const {register} = useAuth()
+    const {register , getCurrentUser} = useAuth()
     const navigate = useNavigate()
+    const { setUser } = useCurrentUser()
 
     function changeStep(type : string) {
         if(type === 'prev' ){
@@ -69,16 +72,20 @@ const RegisterForm = () => {
                 mail , password : mdp , location : lieu , creationDate ,
                 name : nom , phone 
             }
-            register(data).then((e:any)=>{
-                showSuccessMessage('Compte creé avec reussie')
+            register(data).then(async(e:any)=>{
                 localStorage.setItem(TOKEN_KEY , e.data.token)
+                const req = await getCurrentUser()
+                setUser(req)
+                toast.success('Compte crée avec succès')
                 navigate('/' , {replace : true})
-            }).catch((e:any)=> showRequestError(e.response.data.message))
+            }).catch((e:any)=> 
+                toast.error('Erreur lors de la requette!')
+            )
         }
     }
 
     return (
-        <div className='w-full'>
+        <div className='w-full bg-fond'>
             <form action="" onSubmit={handleSubmit} className='pt-8 pb-2 h-80'>
                 {
                     activeStep == 0 && (
