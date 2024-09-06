@@ -1,6 +1,6 @@
 import React , {FormEvent, useState} from 'react';
 import { GenreData, MatrimonialeData } from '../../../components/data';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../../helpers';
+import { inputStyles, isValidEmail, showRequestError, showSuccessMessage } from '../../../helpers';
 import useEmployee from '../../../hooks/useEmployee';
 import { IEmployee } from '../../../types';
 import { FaAngleLeft, FaAngleRight, FaBuilding, FaUser } from 'react-icons/fa' 
@@ -22,8 +22,8 @@ const NewEmployeeModal : React.FC<CreateMetierModalPropsType> = (props) => {
     const [age ,setAge] = useState<number>(0)
     const [adress ,setAdress] = useState<string>('')
     const [phoneNumber ,setPhoneNumber] = useState<string>('')
-    const [gender ,setGender] = useState<string>('')
-    const [matrimoniale ,setMatrimoniale] = useState<string>('')
+    const [gender ,setGender] = useState<string>('homme')
+    const [matrimoniale ,setMatrimoniale] = useState<string>('Celibataire')
     const [mail ,setMail] = useState<string>('')
     const [hiringDate ,setHiringDate] = useState<Date>(new Date())
 
@@ -48,7 +48,7 @@ const NewEmployeeModal : React.FC<CreateMetierModalPropsType> = (props) => {
         setAdressError(addrErr? 'adresse invalide' : '') 
         const phonErr = phoneNumber.length != 10 
         setPhoneNumberError(phonErr?'telephone invalide' : '') 
-        const mailErr = mail.length < 2 || mail.length > 50
+        const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
 
         const invalid = nomErr || ageErr || addrErr || phonErr || mailErr
@@ -139,7 +139,7 @@ const NewEmployeeModal : React.FC<CreateMetierModalPropsType> = (props) => {
                             options={MatrimonialeData}
                         />
                         <ControlledDatePicker 
-                            value={hiringDate.toDateString()}
+                            value={hiringDate}
                             errorMessage={dateError}
                             icon={<FiCalendar/>}
                             label="Date d'embauche"

@@ -3,7 +3,7 @@ import React from 'react';
 const Acceuil = () => {
     return (
         <div className='home min-h-screen w-full'>
-            <div className='flex justify-center items-center w-full h-screen'>
+            <div className='flex justify-center text-white items-center w-full h-screen'>
                 <div className='w-1/2'>
                     <p className='text-center text-5xl font-bold'>APPLICATION GESTION DES SALAIRES</p>
                     <p className='text-center text-2xl'>par VISIONS ADDITIONNELLES</p>

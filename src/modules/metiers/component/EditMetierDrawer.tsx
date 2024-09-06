@@ -9,7 +9,8 @@ import { Card } from 'antd';
 
 interface ModifyMetierModalPropsType {
     close : ()=> void , 
-    metier : IMetier
+    metier : IMetier , 
+    refetch : ()=> void
 }
 
 const directionSelectData = [
@@ -23,7 +24,7 @@ const directionSelectData = [
     }
 ]
 
-const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}) => {
+const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , refetch , metier}) => {
 
     
     const {update} = useMetier()
@@ -47,6 +48,7 @@ const EditMetierModal : React.FC<ModifyMetierModalPropsType> = ({close , metier}
             }
             update(metier._id || '', data).then((e:any)=>{
                 showSuccessMessage()
+                refetch()
                 close()
             }).catch((err:any)=> showRequestError())
         }

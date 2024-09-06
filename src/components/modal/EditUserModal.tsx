@@ -1,37 +1,30 @@
-import React , {FormEvent, useState} from 'react';
-import { GenreData, MatrimonialeData } from '../../../components/data';
-import Button from '../../../components/ui/Button';
-import { InputControlled, SelectControlled, TextareaControlled } from '../../../components/ui/InputControlled';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../../helpers';
-import useEmployee from '../../../hooks/useEmployee';
-import { IEmployee } from '../../../types';
-import { Step , Stepper} from 'react-form-stepper'
 import {  FaSave, FaUser } from 'react-icons/fa' 
-import { useCurrentUser } from '../../../hooks/useCurrentUser';
-import { ControlledDatePicker, ControlledInput, ControlledInputNumber, ControlledSelect } from '../../../components/ui/ControlledInput';
-import MaskScreen from '../../../components/ui/MaskScreen';
 import { ThreeDots } from 'react-loader-spinner';
 import { FiCalendar, FiMail, FiMap, FiPhone, FiUser, FiUserCheck } from 'react-icons/fi';
 import { Card } from 'antd';
+import { FormEvent, useState } from 'react';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+import useAuth from '../../hooks/useAuth';
+import { ICompany } from '../../types';
+import { showRequestError, showSuccessMessage } from '../../helpers';
+import { ControlledDatePicker, ControlledInput } from '../ui/ControlledInput';
+import MaskScreen from '../ui/MaskScreen';
 
 interface EditEmployeePropsType {
     close : ()=> void ,
-    refetch : ()=> void ,
-    employee : IEmployee
 }
 
-const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
-    const {close , employee , refetch} = props
+const EditUserModal : React.FC<EditEmployeePropsType> = (props) => {
+    const {close} = props
 
-    const [nom ,setNom] = useState<string>(employee.firstName)
-    const [prenoms ,setPrenoms] = useState<string>(employee.lastName)
-    const [age ,setAge] = useState<number>(employee.age)
-    const [adress ,setAdress] = useState<string>(employee.adress)
-    const [phoneNumber ,setPhoneNumber] = useState<string>(employee.phone)
-    const [gender ,setGender] = useState<string>(employee.gender)
-    const [matrimoniale ,setMatrimoniale] = useState<string>(employee.matrimoniale)
-    const [mail ,setMail] = useState<string>(employee.mail)
-    const [hiringDate ,setHiringDate] = useState<Date>(new Date())
+    const {user} = useCurrentUser()
+    const {update} = useAuth()
+
+    const [nom ,setNom] = useState<string>(user?.name || '')
+    const [location ,setLocation] = useState<string>(user?.location || '')
+    const [mail ,setMail] = useState<string>(user?.mail || '')
+    const [phone ,setPhone] = useState<string>(user?.phone || '')
+    const [creationDate ,setCreationDate] = useState<Date>(user?.creationDate || new Date())
 
     const [dateError ,setDateError] = useState<string>('')
     const [nomError ,setNomError] = useState<string>('')
@@ -42,35 +35,29 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
     const [mailError ,setMailError] = useState<string>('')
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
-    const {editEmployee} = useEmployee()
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
         const nomErr = nom.length < 2 || nom.length > 50 
         setNomError(nomErr ?'nom invalide' : '')
-        const ageErr = age < 18 || age > 100 
-        setAgeError(ageErr? 'age invalide' : '') 
-        const addrErr = adress.length < 3 || adress.length > 100 
+        const addrErr = location.length < 3 || location.length > 100 
         setAdressError(addrErr? 'adresse invalide' : '') 
-        const phonErr = phoneNumber.length != 10
+        const phonErr = phone.length != 10
         setPhoneNumberError(phonErr?'telephone invalide' : '') 
         const mailErr = mail.length < 2 || mail.length > 50
         setMailError(mailErr?'mail invalide' : '') 
 
-        const invalid = nomErr || ageErr || addrErr || phonErr || mailErr
+        const invalid = nomErr || addrErr || phonErr || mailErr
         if(!invalid){
             setIsLoading(true)
-            const data : IEmployee = {
-                firstName : nom ,
-                hiringDate, 
-                isCurrentEmployee : true , 
-                lastName :  prenoms , 
-                gender , 
-                age , adress , phone : phoneNumber , 
-                matrimoniale , mail
+            const data : ICompany = {
+                name : nom ,
+                creationDate,
+                location,
+                phone , 
+                mail
             }
-            editEmployee( employee._id || '' ,data).then((e:any)=>{
+            update( user?._id || '' ,data).then((e:any)=>{
                 showSuccessMessage()
-                refetch()
                 close()
                 setIsLoading(false)
             }).catch((err:any)=> {
@@ -86,7 +73,7 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
             <Card className={`animate-fadeIn w-1/2 bg-fond`} onClick={(e : any)=>e.stopPropagation()}>
                 <div className='flex justify-center text-primary items-center'>
                     <FaUser className='text-xl mr-2'/>
-                    <h4 className='font-bold text-xl'> MODIFIER UN SALARIÉ</h4>
+                    <h4 className='font-bold text-xl'> MODIFIER LES INFORMATIONS DU COMPTE</h4>
                 </div>
                 <form onSubmit={handleSubmit} method='post' className='mt-5'>
                     <div className='grid grid-cols-2 gap-2'>
@@ -99,27 +86,19 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
                             icon={<FiUser/>}
                         />
                         <ControlledInput
-                            label='Prénoms:'
-                            value={prenoms}
-                            placeholder='prenom'
-                            onChange={setPrenoms}
+                            label='Location:'
+                            value={location}
+                            placeholder='location'
+                            onChange={setLocation}
                             errorMessage={prenomsError}
-                            icon={<FiUserCheck/>}
+                            icon={<FiMap/>}
 
-                        />
-                        <ControlledInputNumber
-                            label='Age:'
-                            value={age}
-                            placeholder='age'
-                            onChange={setAge}
-                            errorMessage={ageError}
-                            icon={<FiUserCheck/>}
                         />
                         <ControlledInput
                             label='Téléphone:'
-                            value={phoneNumber}
+                            value={phone}
                             placeholder='téléphone'
-                            onChange={setPhoneNumber}
+                            onChange={setPhone}
                             errorMessage={phoneNumberError}
                             icon={<FiPhone/>}
 
@@ -133,33 +112,12 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
                             icon={<FiMail/>}
 
                         />
-                        <ControlledInput
-                            label='Adresse:'
-                            value={adress}
-                            placeholder='adresse'
-                            onChange={setAdress}
-                            errorMessage={adressError}
-                            icon={<FiMap/>}
-
-                        />
-                        <ControlledSelect
-                            label='Genre:'
-                            value={gender}
-                            onChange={setGender}
-                            options={GenreData}
-                        />
-                        <ControlledSelect
-                            label='Situation matrimoniale:'
-                            value={matrimoniale}
-                            onChange={setMatrimoniale}
-                            options={MatrimonialeData}
-                        />
                         <ControlledDatePicker
-                            value={hiringDate}
+                            value={creationDate}
                             errorMessage={dateError}
                             icon={<FiCalendar/>}
-                            label="Date d'embauche:"
-                            onChange={setHiringDate}
+                            label="Date de création:"
+                            onChange={setCreationDate}
                         />
                     </div>
                     <div className='flex justify-end items-center py-5'>
@@ -186,4 +144,4 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
     );
 };
 
-export default EditEmployeeModal;
+export default EditUserModal;

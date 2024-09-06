@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../../components/data/backend';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../helpers';
+import { inputStyles, isValidEmail, showRequestError, showSuccessMessage } from '../../helpers';
 import useAuth from '../../hooks/useAuth';
 import { Stepper , Step } from 'react-form-stepper'
 import { FaAngleLeft, FaAngleRight, FaBuilding, FaPlus, FaSave, FaUserEdit } from 'react-icons/fa' 
@@ -46,7 +46,7 @@ const RegisterForm = () => {
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        const phoneErr = phone.length != 12  
+        const phoneErr = phone.length != 10
         setPhoneError(phoneErr ?'téléphone invalide' : '')
         const lieuErr = lieu.length < 2 && lieu.length > 50 
         setLieuError(lieuErr? 'location invalide' : '') 
@@ -54,7 +54,7 @@ const RegisterForm = () => {
         setNomError(nomErr? 'nom invalide' : '') 
         const crdErr = false
         setCreationDateError(crdErr?'date invalide' : '') 
-        const mailErr = mail.length < 2 || mail.length > 50
+        const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
         const pw1Err = mdp.length < 6 
         setMdpError(pw1Err?'le mot de passe doit contenir au moins 6 caractères' : '') 
@@ -133,7 +133,7 @@ const RegisterForm = () => {
                         />
                         <ControlledDatePicker 
                           label='Date de création:'
-                          value={''}
+                          value={creationDate}
                           onChange={setCreationDate}
                           errorMessage={creationDateError} 
                           icon={<FiCalendar/>}
@@ -180,13 +180,13 @@ const RegisterForm = () => {
                 </button>
             </div>
             <Stepper activeStep={activeStep} >
-                <Step key={0} label='Informations du compte' />
+                <Step key={0} className='bg-blue-500' label='Informations du compte' />
                 <Step key={1} label="Informations de l'entreprise" />
                 <Step key={2} label='Mot de passe' />
             </Stepper>
             <div>
                 <NavLink to='/login'>
-                    <h3 className='text-center text-slate-700 hover:underline'>j'ai dejà une compte</h3>
+                    <h3 className='text-center text-slate-300 hover:underline'>j'ai dejà une compte</h3>
                 </NavLink>
             </div>
 

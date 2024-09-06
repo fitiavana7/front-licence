@@ -27,7 +27,7 @@ const CurrentEmployees = () => {
     }
     return (
         <>
-            <TitleSection icon={<FiUsers/>} title='liste des salariés actuels' onClick={()=> setIsCreatingSalarie(!isCreatingSalarie)}/>
+            <TitleSection icon={<FiUsers/>} title={`liste des salariés actuels (${data.length}) `} onClick={()=> setIsCreatingSalarie(!isCreatingSalarie)}/>
             { isCreatingSalarie && <NewEmployeeModal close={()=> {
                 setIsCreatingSalarie(!isCreatingSalarie)
                 refetch()  

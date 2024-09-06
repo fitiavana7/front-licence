@@ -4,7 +4,7 @@ import { ICompany, ILogin } from "../types";
 
 export default function useAuth() {
     
-    return {register , login , getCurrentUser,getStat}
+    return {register , update , changePassword, login , getCurrentUser,getStat}
 
     function register(data : ICompany) {
         return axios.post(`${AUTH_URL}/register`,data)
@@ -12,6 +12,14 @@ export default function useAuth() {
 
     function login(data : ILogin) {
         return axios.post(`${AUTH_URL}/login`,data)
+    }
+
+    function changePassword( id : string , data : {newPassword  :string , password :string}) {
+        return axios.post(`${AUTH_URL}/change-password/${id}`,data)
+    }
+
+    function update(id : string ,data : ICompany) {
+        return axios.post(`${AUTH_URL}/update/${id}`,data)
     }
 
     async function getCurrentUser() {

@@ -51,6 +51,7 @@ const EmployeeTable : FC<EmployeeTableProps> = ({data , refetch , isCurrentEmplo
                 <Input 
                     onChange={(e)=>setFiltre(e.target.value)}
                     placeholder='entrer un nom'
+                    className='focus:text-white hover:text-white'
                 />
             </div>
         <div className='w-full text-sm'>
@@ -116,7 +117,7 @@ const EmployeeTable : FC<EmployeeTableProps> = ({data , refetch , isCurrentEmplo
             }
         </div>
         {
-            isModifying && employeeToModify && <EditEmployeeModal employee={employeeToModify} close={()=>setIsModifying(false)}/>
+            isModifying && employeeToModify && <EditEmployeeModal refetch={refetch} employee={employeeToModify} close={()=>setIsModifying(false)}/>
         }
         {
             isMoving && idToMove && 

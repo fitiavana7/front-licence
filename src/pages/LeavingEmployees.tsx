@@ -28,7 +28,7 @@ const LeavingEmployees = () => {
     return (
         <>
             <div className='flex justify-start items-center w-full py-8'>
-               <h3 className='text-lg flex items-center font-bold text-primary'><FiUsers /> <span className='ml-2'>LISTE DES ANCIENS SALARIÉS</span></h3>
+               <h3 className='text-lg flex items-center font-bold text-primary'><FiUsers /> <span className='ml-2'>LISTE DES ANCIENS SALARIÉS ({data.length})</span></h3>
             </div>
             { isCreatingSalarie && <NewEmployeeModal close={()=> {
                 setIsCreatingSalarie(!isCreatingSalarie)

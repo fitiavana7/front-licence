@@ -11,7 +11,7 @@ const Guide = () => {
                     GUIDES D'UTILISATION
                 </h3>
             </div>
-            <Card className='my-3'>
+            <Card className='my-3 bg-2'>
                 <div className='flex items-center'>
                     <span className='bg-blue-500 p-2 rounded-full text-white text-center font-bold'>01</span>
                     <p className='font-bold text-lg ml-2'>Créer des salariés</p>

@@ -6,6 +6,10 @@ import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import useEmployee from '../../../hooks/useEmployee';
 import useMetier from '../../../hooks/useMetier';
 import { IEmployee, IMetier } from '../../../types';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { FiActivity, FiCheckSquare, FiUsers } from 'react-icons/fi';
+import { FaEuroSign } from 'react-icons/fa';
 
 type TStat =  { 
     totalEmployees : number,
@@ -45,11 +49,21 @@ const NumberStat = () => {
     },[])
     return (
         <>
+            <div className='flex justify-between items-center py-6 px-4 bg-primary rounded-lg text-white my-5'>
+        	    <span className='font-bold text-3xl'>
+                    {user?.name.toLocaleUpperCase()}
+                </span>
+                <span className='italic text-xl font-bold'>
+                    {format(new Date(), 'dd MMMM yyyy', { locale: fr })}
+                </span>
+            </div>
             <div className='grid grid-cols-4 gap-2 text-black'>
-                <div className={`rounded-md p-3 text-center bg-blue-200 hover:bg-blue-400 hover:text-white`}>
-                    <h3 className='text-3xl font-bold'>{stat?.totalEmployees}</h3>
-                    <h4 className='text-2xl'>salariés</h4>
-                    <div className='text-start text-md'>
+                <div className={`rounded-md p-3 text-center bg-[#F3F7EC] hover:bg-blue-400 hover:text-white`}>
+                    <h3 className='font-bold flex text-primary items-end hover:text-white'> 
+                        <FiUsers className='mr-2 text-3xl'/>
+                        <span className='text-2xl'>{ stat?.totalEmployees} salariés </span>
+                    </h3>
+                    <div className='text-start text-md mt-3'>
                         {
                             employees?.map(el =>(
                                 <p>- {el.firstName} </p>
@@ -57,10 +71,12 @@ const NumberStat = () => {
                         }
                     </div>
                 </div>
-                <div className={`rounded-md p-3 text-center bg-blue-200 hover:bg-blue-400 hover:text-white`}>
-                    <h3 className='text-3xl font-bold'>{stat?.totalWorks}</h3>
-                    <h4 className='text-2xl'>metiers</h4>
-                    <div className='text-start text-md'>
+                <div className={`rounded-md p-3 text-center bg-[#F3F7EC] hover:bg-blue-400 hover:text-white`}>
+                    <h3 className='font-bold flex text-primary items-end hover:text-white'>
+                        <FiActivity className='mr-2 text-3xl'/>
+                        <span className='text-2xl'>{stat?.totalWorks} metiers </span>
+                    </h3>
+                    <div className='text-start text-md mt-3'>
                         {
                             metiers?.map(el =>(
                                 <p>- {el.title} </p>
@@ -68,13 +84,17 @@ const NumberStat = () => {
                         }
                     </div>
                 </div>
-                <div className={`rounded-md p-3 text-center bg-blue-200 hover:bg-blue-400 hover:text-white`}>
-                    <h3 className='text-3xl font-bold'>{stat?.totalPayments}</h3>
-                    <h4 className='text-2xl'>paiements faits</h4>
+                <div className={`rounded-md p-3 text-center bg-[#F3F7EC] hover:bg-blue-400 hover:text-white`}>
+                    <h3 className='font-bold flex text-primary hover:text-white items-end'>
+                        <FaEuroSign className='mr-2 text-3xl'/>    
+                        <span className='text-2xl'>{stat?.totalPayments} paiements effectués </span> 
+                    </h3>
                 </div>
-                <div className={`rounded-md p-3 text-center bg-blue-200 hover:bg-blue-400 hover:text-white`}>
-                    <h3 className='text-3xl font-bold'>{stat?.totalPayed}</h3>
-                    <h4 className='text-2xl'>salariés payés</h4>
+                <div className={`rounded-md p-3 text-center bg-[#F3F7EC] hover:bg-blue-400 hover:text-white`}>
+                    <h3 className='flex text-primary hover:text-white items-end font-bold'>
+                        <FiCheckSquare className='mr-2 text-3xl'/>
+                        <span className='text-2xl'>{stat?.totalPayed} salariés payés </span>
+                    </h3>
                 </div>
             </div>
         </>

@@ -23,7 +23,7 @@ const MetierItem : FunctionComponent<MetierProps> = ({metier , delete : deleteMe
 
     return (
     <>
-        {isModifying && <EditMetierDrawer metier={metier} close={()=> setIsModifying(!isModifying)}/>}
+        {/* {isModifying && <EditMetierDrawer metier={metier} close={()=> setIsModifying(!isModifying)}/>} */}
         <div className='p-5 bg-white rounded-md text-sm'>
             <div className='flex justify-between items-center mb-3'>
                 <div className='w-5/6 border border-primary p-2 rounded-md flex justify-between items-center'>

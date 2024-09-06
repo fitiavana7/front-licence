@@ -1,5 +1,5 @@
 import React , {FormEvent, useState , useEffect} from 'react';
-import { showRequestError, showSuccessMessage } from '../../../helpers';
+import { formatCurrency, showRequestError, showSuccessMessage } from '../../../helpers';
 import { IEmployee, IMetier, IPayment, ISalary } from '../../../types';
 import { FaMailBulk, FaSave, FaUser } from 'react-icons/fa' 
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
@@ -49,6 +49,11 @@ const PayerModal : React.FC<PayerProps> = (props) => {
     const [titleError ,setTitleError] = useState<string>('')
     const [commentaireError ,setCommentaireError] = useState<string>('')
 
+    const [plusError ,setPlusError] = useState<string>('')
+    const [plusDescError ,setPlusDescError] = useState<string>('')
+    const [moinsError ,setMoinsError] = useState<string>('')
+    const [moinsDescError ,setMoinsDescError] = useState<string>('')
+
     const {create} = usePayment()
     const {getById} = useMetier()
     const {getCurrentSalary} = useSalary()
@@ -81,7 +86,16 @@ const PayerModal : React.FC<PayerProps> = (props) => {
         const commErr = commentaire.length < 2 || commentaire.length > 150
         setCommentaireError(commErr?'commentaire invalide':'') 
 
-        const invalid = titErr || commErr
+        const pErr = plus < 1  
+        setPlusError(titErr?'valeur prime invalide': '') 
+        const mErr = moins < 1
+        setMoinsError(mErr?'valeur decaissement invalide':'') 
+        const pDescErr = plusDescription.length < 2 || plusDescription.length > 100 
+        setPlusDescError(pDescErr?'description invalide': '') 
+        const mDescErr = moinsDescription.length < 2 || moinsDescription.length > 100 
+        setMoinsDescError(mDescErr?'description invalide': '') 
+
+        const invalid = titErr || commErr || mErr || pErr || pDescErr || mDescErr
         if(!invalid){
             const data : IPayment = {
                 commentaire ,
@@ -120,19 +134,19 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                 <div className='grid grid-cols-2 gap-2 pt-10 text-sm'>
                     <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                         <h3 className='flex items-center text-primary font-bold'><FiUser className='mr-2' /> Salarié</h3>
-                        <span className='font-bold'>{employee.firstName.toLocaleUpperCase()} {employee.lastName}</span>
+                        <span className='font-bold text-white'>{employee.firstName.toLocaleUpperCase()} {employee.lastName}</span>
                     </div>
                     <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                         <h3 className='flex items-center text-primary font-bold'><FiMail className='mr-2' /> Mail</h3>
-                        <span className='font-bold'>{employee.mail}</span>
+                        <span className='font-bold text-white'>{employee.mail}</span>
                     </div>
                     <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                         <h3 className='flex items-center text-primary font-bold'><FiActivity className='mr-2' /> Metier</h3>
-                        <span className='font-bold'>{work?.title}</span>
+                        <span className='font-bold text-white'>{work?.title}</span>
                     </div>
                     <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                         <h3 className='flex items-center text-primary font-bold'><FiMail className='mr-2' /> Salaire</h3>
-                        <span className='font-bold'>{amount}</span>
+                        <span className='font-bold text-white'>{ formatCurrency(amount)}</span>
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} method='post' className='my-2'>
@@ -156,7 +170,7 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                             value={plus}
                             placeholder='prime ou bonus'
                             onChange={setPlus}
-                            errorMessage={titleError}
+                            errorMessage={plusError}
                             icon={<FiShoppingCart/>}
                         />
                         <ControlledTextarea
@@ -164,7 +178,7 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                             value={plusDescription}
                             placeholder='description'
                             onChange={setPlusDescription}
-                            errorMessage={commentaireError}
+                            errorMessage={plusDescError}
                             icon={<FiMessageSquare/>}
                         />
                     </div> }
@@ -174,7 +188,7 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                             value={moins}
                             placeholder='decaissement'
                             onChange={setMoins}
-                            errorMessage={titleError}
+                            errorMessage={moinsError}
                             icon={<FiShoppingCart/>}
                         />
                         <ControlledTextarea
@@ -182,7 +196,7 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                             value={moinsDescription}
                             placeholder='decaissement'
                             onChange={setMoinsDescription}
-                            errorMessage={commentaireError}
+                            errorMessage={moinsDescError}
                             icon={<FiMessageSquare/>}
                         />
                     </div>

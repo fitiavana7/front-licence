@@ -1,5 +1,5 @@
 import React , {FormEvent, useEffect, useState} from 'react';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../../helpers';
+import { inputStyles, showRequestError, showSuccessMessage, showWarningMessage } from '../../../helpers';
 import { IEmployee, IMetier, ISalary } from '../../../types';
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import useMetier from '../../../hooks/useMetier';
@@ -26,7 +26,6 @@ const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employee
     const [dateError ,setDateError] = useState<string>('')
     const [amountError ,setAmountError] = useState<string>('')
     const [descriptionError ,setDescriptionError] = useState<string>('')
-    const [metierError ,setMetierError] = useState<string>('')
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
     const {createSalary} = useSalary()
@@ -41,19 +40,31 @@ const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employee
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        const data : ISalary = {
-            amount , applicationDate : date , description ,
-            employeeId , userId : user?._id || '' , workId : metier
+        if(metier.length < 1){
+            showWarningMessage('Veuiller choisir le metier...')
+        }else{
+            const amountErr = amount < 1 
+            setAmountError(amountErr ?'montant invalide' : '')
+            const descErr = description.length < 2 || description.length > 100 
+            setDescriptionError(descErr? 'description invalide' : '') 
+    
+            const invalid = amountErr || descErr
+            if(!invalid){
+                const data : ISalary = {
+                    amount , applicationDate : date , description ,
+                    employeeId , userId : user?._id || '' , workId : metier
+                }
+                setIsLoading(true)
+                createSalary(data).then((e:any)=>{
+                    showSuccessMessage()
+                    close()
+                    setIsLoading(false)
+                }).catch((err:any)=>{
+                showRequestError()
+                    setIsLoading(false)
+                })
+            }    
         }
-        setIsLoading(true)
-        createSalary(data).then((e:any)=>{
-            showSuccessMessage()
-            close()
-            setIsLoading(false)
-        }).catch((err:any)=>{
-          showRequestError()
-            setIsLoading(false)
-        })
     }
 
     return (
@@ -67,7 +78,7 @@ const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employee
                     <ControlledDatePicker
                         label='Date du changement'
                         onChange={setDate}
-                        value={''}
+                        value={date}
                         classname='mb-4'
                         errorMessage={dateError}
                         icon={<FiCalendar/>}

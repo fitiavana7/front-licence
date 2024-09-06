@@ -10,12 +10,13 @@ module.exports = {
       },
       colors: {
         'primary': '#008dcb',
-        'fond': '#dddede',
+        'fond': '#021526',
         'third': '#bbc3c6',
         'four':'#00563B',
         'five':'rgba(0,0,0,.25)',
         'six':'#B2BEB5',
         'dark':'#2f2e33',
+        'fond2' : '#26355D'
       },
       keyframes: {
         wrapper: {

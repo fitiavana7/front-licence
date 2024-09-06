@@ -1,7 +1,8 @@
 import React, { FC, ReactNode } from 'react';
 import { DatePicker, Input , InputNumber, Select } from 'antd'
 import { FaCalendar, FaMailBulk } from 'react-icons/fa';
-import { inputStyles } from '../../helpers';
+import { inputStyles, isOnlyDigits } from '../../helpers';
+import dayjs from 'dayjs';
 
 type ControlledInputType = {
     onChange : (e:any)=> void ,
@@ -29,7 +30,7 @@ export const ControlledInput : FC<ControlledInputType> = ({
             <Input 
                 placeholder={placeholder}
                 value={value}
-                className={`w-2/3`}
+                className={`w-2/3 focus:text-white hover:text-white font-bold`}
                 onChange={(e:any)=> { handleChange(e.target.value) }}
             />
         </div>
@@ -55,7 +56,7 @@ export const ControlledInputPassword : FC<ControlledInputType> = ({
                     type="password"
                     placeholder={placeholder}
                     value={value}
-                    className={`w-2/3 ${inputStyles()}`}
+                    className={`w-2/3 focus:text-white hover:text-white ${inputStyles()}`}
                     onChange={(e:any)=> { handleChange(e.target.value) }}
                 />
             </div>
@@ -72,15 +73,26 @@ export const ControlledInputNumber : FC<ControlledInputType> = ({
     label,
     classname
     }) => {
+    const changeValue = (value: string | number | null) => {
+        if (typeof value === 'string') {
+              const numericValue = value.replace(/[^0-9]/g, '');
+              const newValue = numericValue !== '' ? Number(numericValue) : undefined;
+              handleChange(newValue);
+            } else {
+                handleChange(value as number | 0);
+            }
+        };
     return (
         <div className='my-1 text-sm'>
         <div className={`border w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaMailBulk className='mr-2' />{label}</h3>
             <InputNumber
-                className={`w-2/3`}
+                className={`w-2/3 hover:text-white focus:text-white font-bold`}
                 placeholder={placeholder}
                 value={value}
-                onChange={(e)=>handleChange(e as number)}
+                onChange={(e)=> {
+                    changeValue(e)
+                }}
             />
         </div>
         { errorMessage.length > 0 && <span className='text-red-500 text-xs'>{errorMessage}</span> }
@@ -109,7 +121,7 @@ export const ControlledSelect : FC<ControlledSelectType> = ({
             <Select
                 defaultValue={value}
                 onChange={(e:any)=> handleChange(e)} 
-                className='w-2/3'
+                className='w-2/3 hover:text-white focus:text-white font-bold'
                 options={options} 
             />
         </div>
@@ -130,7 +142,7 @@ export const ControlledTextarea : FC<ControlledInputType> = ({
                 <textarea 
                     value={value}
                     onChange={(e)=> handleChange(e.target.value)}
-                    className={`${inputStyles()} w-2/3`}
+                    className={`${inputStyles()} w-2/3 font-bold`}
                     placeholder={placeholder}
                 />
             </div>
@@ -139,17 +151,19 @@ export const ControlledTextarea : FC<ControlledInputType> = ({
     );
 };
 
-export const ControlledDatePicker : FC<ControlledInputType> = ({
+export const ControlledDatePicker : FC<Omit<ControlledInputType , 'value' > & { value : Date }> = ({
     onChange : handleChange , 
     label,
-    classname
+    classname,
+    value = new Date()
     }) => {
     return (
         <div className={`border-4 text-sm my-1 w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaCalendar className='mr-2' />{label}</h3>
             <DatePicker 
-                className='w-2/3 p-1'
+                className='w-2/3 p-1 hover:text-white focus:text-white font-bold'
                 onChange={(e)=>{handleChange(e)}}
+                defaultValue={dayjs(value)}
             />
         </div>
     );

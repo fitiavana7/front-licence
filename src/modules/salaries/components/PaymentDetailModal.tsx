@@ -1,5 +1,5 @@
 import React , {FormEvent, useState , useEffect} from 'react';
-import { showRequestError, showSuccessMessage } from '../../../helpers';
+import { formatCurrency, showRequestError, showSuccessMessage } from '../../../helpers';
 import { IEmployee, IMetier, IPayment, ISalary } from '../../../types';
 import { FaEuroSign, FaMailBulk, FaSave, FaTrash, FaUser } from 'react-icons/fa' 
 import useMetier from '../../../hooks/useMetier';
@@ -9,9 +9,10 @@ import useEmployee from '../../../hooks/useEmployee';
 import { EventType } from '@testing-library/react';
 import { Button, Card } from 'antd';
 import usePayment from '../../../hooks/usePayment';
-import { FiDownload, FiTrash } from 'react-icons/fi';
+import { FiDownload, FiTrash, FiUser } from 'react-icons/fi';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useCurrentUser } from '../../../hooks/useCurrentUser';
 
 interface PaymentDetailProps {
     close : ()=> void ,
@@ -26,6 +27,7 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
 
     const [work , setWork] = useState<IMetier>()
     const [employee , setEmployee] = useState<IEmployee>()
+    const {user} = useCurrentUser()
 
     function getData(){
         getEmployeeDetails(payment.employeeId).then((e)=>{
@@ -86,8 +88,13 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
 
     return (
         <div className='z-50 w-full min-h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>
-            <Card className={`animate-fadeIn w-1/2 max-h-[90vh] overflow-y-scroll bg-fond`} onClick={(e : any)=>e.stopPropagation()}>
+            <Card className={`animate-fadeIn w-1/2 max-h-[90vh] overflow-y-scroll`} onClick={(e : any)=>e.stopPropagation()}>
                 <div id="pdf-content">
+                    <div className='flex justify-between py-4'>
+                        <span className='flex items-center font-bold text-2xl'>
+                            <FiUser className='mr-2' /> {user?.name.toLocaleUpperCase()}
+                        </span>
+                    </div>
                     <div className='flex justify-between items-center'>
                         <div className='flex items-center text-primary '>
                             <FaEuroSign className='text-xl mr-2'/>
@@ -112,7 +119,7 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
                         </div>
                         <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                             <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Salaire</h3>
-                            <span className='font-bold'>{payment.amount} ar</span>
+                            <span className='font-bold'>{formatCurrency(payment.amount)} ar</span>
                         </div>
                         <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                             <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Titre</h3>

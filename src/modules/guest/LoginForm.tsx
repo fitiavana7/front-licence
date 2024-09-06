@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../../components/data/backend';
 import { ControlledInput, ControlledInputPassword } from '../../components/ui/ControlledInput';
 import Loader from '../../components/ui/Loader';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../helpers';
+import { inputStyles, isValidEmail, showRequestError, showSuccessMessage } from '../../helpers';
 import useAuth from '../../hooks/useAuth';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { ILogin } from '../../types';
@@ -27,7 +27,7 @@ const LoginForm = () => {
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        const mailErr = mail.length < 2 || mail.length > 50
+        const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
         const pwdErr = mdp.length < 6 
         setMdpError(pwdErr ?'le mot de passe doit contenir au moins 6 caractères' : '')
@@ -47,6 +47,7 @@ const LoginForm = () => {
                 navigate('/' , {replace : true})
 
             }).catch((e:any)=> {
+                setIsLoading(false)
                 toast.error("Identifiants incorrects")
             })
         }
@@ -84,7 +85,7 @@ const LoginForm = () => {
             </form>
             <div>
                 <NavLink to='/register'>
-                    <h3 className='text-center text-slate-700 hover:underline'>creer une compte</h3>
+                    <h3 className='text-center text-slate-400 hover:underline'>creer une compte</h3>
                 </NavLink>
             </div>
 

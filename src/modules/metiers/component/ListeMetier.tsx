@@ -2,15 +2,15 @@ import React , { useState , useEffect} from 'react';
 import { FiActivity, FiEdit, FiTrash } from 'react-icons/fi';
 import DeleteMetierModal from '../../../components/modal/DeleteMetierModal ';
 import LoadingMini from '../../../components/ui/LoadingMini';
-import MetierItem from '../../../components/ui/MetierItem';
 import NoData from '../../../components/ui/NoData';
-import { showRequestError, showSuccessMessage } from '../../../helpers';
+import TitleSection from '../../../components/ui/TitleSEction';
 import useMetier from '../../../hooks/useMetier';
 import { IMetier } from '../../../types';
 import EditMetierModal from './EditMetierDrawer';
+import NewMetierModal from './NewMetierModal';
 
 const ListeMetier = () => {
-    const {getAll , deleteOne} = useMetier()
+    const {getAll} = useMetier()
 
     const [ metiers , setMetiers] = useState<IMetier[]>([])
     const [ isLoading , setIsLoading] = useState<boolean>(true)
@@ -18,6 +18,7 @@ const ListeMetier = () => {
     const [isDeleting , setIsDeleting] = useState<boolean>(false)
     const [mToEdit , setMToEdit] = useState<IMetier>()
     const [idToDelete , setIdToDelete] = useState<string>('')
+    const [isCreatingMetier , setIsCreatingMetier] = useState<boolean>(false)
 
 
     const refetch = () => { 
@@ -28,13 +29,13 @@ const ListeMetier = () => {
             setIsLoading(false)
         })
     }
-
     useEffect(()=>{
         refetch()
     },[])
 
     return (
         <>
+            <TitleSection icon={<FiActivity/>} title={`liste des metiers (${metiers.length})`} onClick={()=>setIsCreatingMetier(!isCreatingMetier)}/>
         {
             isLoading ? <LoadingMini />
         : metiers.length > 0 ? (
@@ -69,8 +70,9 @@ const ListeMetier = () => {
         ) : (
             <NoData/>
         )}
-            {isModifying && mToEdit && <EditMetierModal metier={mToEdit} close={()=> setIsModifying(!isModifying)}/>}
+            {isModifying && mToEdit && <EditMetierModal metier={mToEdit} refetch={refetch} close={()=>setIsModifying(!isModifying)}/>}
             { isDeleting && idToDelete && <DeleteMetierModal refetch={refetch} id={idToDelete} close={()=> setIsDeleting(false)} /> }
+            { isCreatingMetier && <NewMetierModal refetch={refetch} close={()=> setIsCreatingMetier(!isCreatingMetier)}/>}
         </>
     );
 };

@@ -44,13 +44,13 @@ const Layout : FunctionComponent = () => {
                         <FiUser />
                     </button> 
                     { showMenu &&
-                    <div className='absolute top-9 right-0 bg-white rounded-md p-3 w-48'>
+                    <div className='absolute top-9 right-0 bg-fond text-white rounded-md p-3 w-60 border border-white'>
                         <div className='w-full grid grid-cols-1 my-2'>
-                            <button onClick={()=>goTo('/profile')} className='hover:bg-slate-200 flex items-center justify-start outline-none focus:outline-none p-2 '>
+                            <button onClick={()=>goTo('/profile')} className='hover:bg-slate-200 hover:text-fond flex items-center justify-start outline-none focus:outline-none p-2 '>
                                 <span className='mr-2 text-blue-500 text-sm'><FaUser/></span>
                                 <h3 className='text-md font-bold'>{user?.name}</h3>
                             </button>
-                            <button onClick={handleLogout} className='hover:bg-slate-200 flex items-center justify-start outline-none focus:outline-none p-2 '>
+                            <button onClick={handleLogout} className='hover:bg-slate-200 hover:text-fond flex items-center justify-start outline-none focus:outline-none p-2 '>
                                 <span className='text-red-500 text-md mr-2'><FaSignOutAlt/></span> 
                                 <h3 className='text-md font-bold'>se deconnecter</h3>
                             </button>

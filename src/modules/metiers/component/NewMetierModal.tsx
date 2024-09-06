@@ -8,7 +8,8 @@ import { FiEdit2, FiMessageSquare, FiSave } from 'react-icons/fi';
 import { Card } from 'antd';
 
 interface CreateMetierModalPropsType {
-    close : ()=> void
+    close : ()=> void ,
+    refetch : ()=> void ,
 }
 
 const directionSelectData = [
@@ -23,7 +24,7 @@ const directionSelectData = [
 ]
 
 const NewMetierModal : React.FC<CreateMetierModalPropsType> = (props) => {
-    const {close} = props
+    const {close , refetch} = props
 
     const {create} = useMetier()
     const [titre , setTitre] = useState<string>('')
@@ -46,6 +47,7 @@ const NewMetierModal : React.FC<CreateMetierModalPropsType> = (props) => {
             }
             create(data).then((e:any)=>{
                 showSuccessMessage()
+                refetch()
                 close()
             }).catch((err:any)=> showRequestError())
         }

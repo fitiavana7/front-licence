@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { FaCalendarAlt, FaWallet } from 'react-icons/fa';
 import useSalary from '../../../hooks/useSalary';
-import { showRequestError } from '../../../helpers';
+import { formatCurrency, showRequestError } from '../../../helpers';
 import useMetier from '../../../hooks/useMetier';
 import { FiActivity, FiAlignJustify, FiCalendar, FiList, FiShoppingCart } from 'react-icons/fi';
 
@@ -26,7 +26,7 @@ const SalaryItem : FC<SalaryItemProps> = ({salary , index}) => {
         <div className={`border text-sm ${index === 0 ? 'border-green-200 bg-green-100' : 'border-primary'} p-2 rounded-md`}>
             <div className='flex justify-end items-center my-2'>
                 { index === 0 && <div className='py-1 px-3 mr-2 bg-green-400 rounded-full text-white'>active</div> }                                   
-                <div className='py-1 px-3 bg-orange-500 rounded-full text-white'>{salary.amount} ar</div>
+                <div className='py-1 px-3 bg-orange-500 rounded-full text-white'>{ formatCurrency(salary.amount)} ar</div>
             </div>
             <div className='border border-primary p-2 my-2 rounded-md flex justify-between items-center'>
                 <h3 className='flex items-center text-primary font-bold'><FiActivity className='mr-2' /> Métier :</h3>

@@ -27,11 +27,11 @@ const EmployeeDetail = () => {
 
     return (
         <>
-        <div className='w-full z-20 fixed top-20 text-sm'>
-            <div className='p-2 bg-green-400 w-fit text-white rounded-md flex items-center'>
-                <FiUser/> <span className='font-bold ml-2'>{`${employee?.firstName.toLocaleUpperCase()} ${employee?.lastName}`} </span>
+        <div className='w-[75%] z-20 fixed top-20 text-sm flex justify-between'>
+            <div className='text-white flex items-center'>
+                <FiUser className='text-xl'/> <span className='font-bold ml-2'>{`${employee?.firstName.toLocaleUpperCase()} ${employee?.lastName}`} </span>
             </div>
-            <div className='py-2 flex justify-start items-center'>
+            <div className='py-2 flex items-center text-md text-white'>
                 <span 
                     className={`flex mx-2 items-center cursor-pointer font-bold p-2
                         ${activePage === 0 ? 'text-blue-500  hover:text-blue-600 border-blue-500 border-b-2' : 'hover:text-blue-600'}  
@@ -58,7 +58,7 @@ const EmployeeDetail = () => {
                 </span>
             </div>
         </div>
-        <div className='mt-28'>
+        <div className='mt-24'>
             { activePage === 0 && employee && <ProfileEmployee 
                 employee={employee}
             /> }

@@ -30,11 +30,11 @@ const MoveEmployeeModal : FC<MoveModalProps> = ({close , id , refetch}) => {
         <div className='z-50 w-full min-h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>
             <Card className={`animate-fadeIn w-1/3 bg-fond rounded-md py-3 px-9`} onClick={(e : any)=>e.stopPropagation()}>
                 <form action="" onSubmit={handleSubmit}>
-                    <p className='text-center font-bold text-lg'>Vous allez changer ce salarié en ancien salarié :</p>
+                    <p className='text-center font-bold text-lg text-white'>Vous allez changer ce salarié en ancien salarié :</p>
                     <ControlledDatePicker 
                         errorMessage={dateError}
                         icon={<FiCalendar/>}
-                        value={date.toString()}
+                        value={date}
                         onChange={setDate}
                         label='Date de depart'
                         classname='my-4'

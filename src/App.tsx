@@ -11,6 +11,7 @@ import Guide from './pages/Guide';
 import LeavingEmployees from './pages/LeavingEmployees';
 import CurrentEmployees from './pages/CurrentEmployees';
 import Acceuil from './pages/Acceuil';
+import Paiements from './pages/Paiements';
 
 const Dashboard = lazy(()=> import('./pages/Dashboard'))
 const Metiers = lazy(()=> import('./pages/Metiers'))
@@ -79,6 +80,11 @@ const App  = () => {
                 <Route path='/metiers' element={
                   <Suspense fallback={<Loader/>}>
                     <Metiers/>
+                  </Suspense>
+                } />
+                <Route path='/paiements' element={
+                  <Suspense fallback={<Loader/>}>
+                    <Paiements/>
                   </Suspense>
                 } />
                 <Route path='/guides' element={

@@ -55,5 +55,5 @@ export default function useEmployee(){
         })
     }
 
-    return { getAll : getCurrentEmployees, getOldEmployees, moveEmployee , getEmployeeDetails, create : createEmployee , update : editEmployee , deleteEmployee }
+    return { getAll : getCurrentEmployees, editEmployee, getOldEmployees, moveEmployee , getEmployeeDetails, create : createEmployee , update : editEmployee , deleteEmployee }
 }
