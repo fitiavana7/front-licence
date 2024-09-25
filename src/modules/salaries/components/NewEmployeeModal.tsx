@@ -1,6 +1,6 @@
 import React , {FormEvent, useState} from 'react';
 import { GenreData, MatrimonialeData } from '../../../components/data';
-import { inputStyles, isValidEmail, showRequestError, showSuccessMessage } from '../../../helpers';
+import { inputStyles, isValidEmail, isValidHireDate, showRequestError, showSuccessMessage } from '../../../helpers';
 import useEmployee from '../../../hooks/useEmployee';
 import { IEmployee } from '../../../types';
 import { FaAngleLeft, FaAngleRight, FaBuilding, FaUser } from 'react-icons/fa' 
@@ -50,8 +50,10 @@ const NewEmployeeModal : React.FC<CreateMetierModalPropsType> = (props) => {
         setPhoneNumberError(phonErr?'telephone invalide' : '') 
         const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
+        const dErr = !isValidHireDate(hiringDate)
+        setDateError(dErr?'Entrer une date valide' : '') 
 
-        const invalid = nomErr || ageErr || addrErr || phonErr || mailErr
+        const invalid = nomErr || ageErr || addrErr || phonErr || mailErr || dErr
         if(!invalid){
             setIsLoading(true)
             const data : IEmployee = {

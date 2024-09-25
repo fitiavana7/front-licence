@@ -15,11 +15,14 @@ export function showSuccessMessage(msg? : string) {
 
 export function isValidHireDate(hireDate: Date): boolean {
     const today = new Date();
-      return hireDate.getTime() < today.getTime()
+    const date = new Date(hireDate)
+    return date.getTime() < today.getTime()
   }
 
 export function isValidDateRange(startDate: Date, endDate: Date): boolean {
-    return startDate.getTime() < endDate.getTime()
+    const premier = new Date(startDate)
+    const deux = new Date(endDate)
+    return premier.getTime() < deux.getTime()
 }  
   
 

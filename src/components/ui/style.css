@@ -1,0 +1,13 @@
+.custom-datepicker .ant-picker-input input {
+    width: 66.66%; /* équivalent à w-2/3 */
+    padding: 0.25rem; /* équivalent à p-1 */
+    font-weight: bold; /* équivalent à font-bold */
+}
+.custom-datepicker:hover .ant-picker-input input , .custom-datepicker:focus .ant-picker-input input {
+    color: white; /* Couleur du texte en blanc au hover */
+  }
+  /* Cibler l'input du InputNumber lors du hover */
+.custom-input-number:hover .ant-input-number-input {
+    color: white; /* Couleur du texte en blanc au hover */
+}
+  

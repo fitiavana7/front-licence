@@ -46,7 +46,7 @@ const EditUserModal : React.FC<EditEmployeePropsType> = (props) => {
         const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
         const dErr = !isValidHireDate(creationDate) 
-        setDateError(dErr?'date invalide': '') 
+        setDateError(dErr?'Entrer une date valide': '') 
 
         const invalid = nomErr || locErr || phonErr || mailErr || dErr
         if(!invalid){

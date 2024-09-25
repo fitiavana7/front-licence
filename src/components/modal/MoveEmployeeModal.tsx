@@ -20,7 +20,7 @@ const MoveEmployeeModal : FC<MoveModalProps> = ({close , id , refetch}) => {
     function handleSubmit(e : FormEvent){
         e.preventDefault()
         const dErr = !isValidDateRange(new Date() , date) 
-        setDateError(dErr?'date invalide': '') 
+        setDateError(dErr?'Entrer une date valide , pas dans le passé': '') 
 
         const invalid = dErr
         if(!invalid){

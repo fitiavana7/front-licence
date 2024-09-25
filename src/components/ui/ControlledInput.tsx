@@ -3,6 +3,7 @@ import { DatePicker, Input , InputNumber, Select } from 'antd'
 import { FaCalendar, FaMailBulk } from 'react-icons/fa';
 import { inputStyles, isOnlyDigits } from '../../helpers';
 import dayjs from 'dayjs';
+import './style.css'
 
 type ControlledInputType = {
     onChange : (e:any)=> void ,
@@ -87,7 +88,7 @@ export const ControlledInputNumber : FC<ControlledInputType> = ({
         <div className={`border w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaMailBulk className='mr-2' />{label}</h3>
             <InputNumber
-                className={`w-2/3 font-bold`}
+                className={`w-2/3 font-bold custom-input-number`}
                 placeholder={placeholder}
                 value={value}
                 onChange={(e)=> {
@@ -159,16 +160,16 @@ export const ControlledDatePicker : FC<Omit<ControlledInputType , 'value' > & { 
     errorMessage
     }) => {
     return (
-        <>
+        <div>
         <div className={`border-4 text-sm my-1 w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaCalendar className='mr-2' />{label}</h3>
             <DatePicker 
-                className='w-2/3 p-1 hover:text-white focus:text-white font-bold'
+                className='w-2/3 p-1 custom-datepicker'
                 onChange={(e)=>{handleChange(e)}}
                 defaultValue={dayjs(value)}
             />
         </div>
         { errorMessage.length > 0 && <span className='text-red-500 text-xs'>{errorMessage}</span> }
-    </>
+    </div>
                     );
 };
