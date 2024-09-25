@@ -1,5 +1,5 @@
 import React , {FormEvent, useEffect, useState} from 'react';
-import { inputStyles, showRequestError, showSuccessMessage, showWarningMessage } from '../../../helpers';
+import { isValidDateRange, showRequestError, showSuccessMessage, showWarningMessage } from '../../../helpers';
 import { IEmployee, IMetier, ISalary } from '../../../types';
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import useMetier from '../../../hooks/useMetier';
@@ -12,9 +12,10 @@ import { Card } from 'antd';
 interface EditSalaireDrawerPropsType {
     close : ()=> void,
     employeeId : string,
+    lastChange? : Date
 }
 
-const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employeeId}) => {
+const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employeeId , lastChange}) => {
 
     const [metiers ,setMetiers] = useState<IMetier[]>([])
 
@@ -47,8 +48,9 @@ const EditSalaireModal : React.FC<EditSalaireDrawerPropsType> = ({close,employee
             setAmountError(amountErr ?'montant invalide' : '')
             const descErr = description.length < 2 || description.length > 100 
             setDescriptionError(descErr? 'description invalide' : '') 
-    
-            const invalid = amountErr || descErr
+            const dErr = ( lastChange && !isValidDateRange(lastChange , date))
+            setDateError(dErr ? 'Le date doit depasser la dernière date de changement' : '')
+            const invalid = amountErr || descErr || dErr
             if(!invalid){
                 const data : ISalary = {
                     amount , applicationDate : date , description ,

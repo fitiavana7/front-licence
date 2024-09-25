@@ -2,7 +2,7 @@ import React , {FormEvent, useState} from 'react';
 import { GenreData, MatrimonialeData } from '../../../components/data';
 import Button from '../../../components/ui/Button';
 import { InputControlled, SelectControlled, TextareaControlled } from '../../../components/ui/InputControlled';
-import { inputStyles, showRequestError, showSuccessMessage } from '../../../helpers';
+import { inputStyles, isValidHireDate, showRequestError, showSuccessMessage } from '../../../helpers';
 import useEmployee from '../../../hooks/useEmployee';
 import { IEmployee } from '../../../types';
 import { Step , Stepper} from 'react-form-stepper'
@@ -31,7 +31,7 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
     const [gender ,setGender] = useState<string>(employee.gender)
     const [matrimoniale ,setMatrimoniale] = useState<string>(employee.matrimoniale)
     const [mail ,setMail] = useState<string>(employee.mail)
-    const [hiringDate ,setHiringDate] = useState<Date>(new Date())
+    const [hiringDate ,setHiringDate] = useState<Date>(employee.hiringDate || new Date())
 
     const [dateError ,setDateError] = useState<string>('')
     const [nomError ,setNomError] = useState<string>('')
@@ -55,6 +55,8 @@ const EditEmployeeModal : React.FC<EditEmployeePropsType> = (props) => {
         setPhoneNumberError(phonErr?'telephone invalide' : '') 
         const mailErr = mail.length < 2 || mail.length > 50
         setMailError(mailErr?'mail invalide' : '') 
+        const dErr = !isValidHireDate(hiringDate)
+        setDateError(dErr ?'date invalide' : '') 
 
         const invalid = nomErr || ageErr || addrErr || phonErr || mailErr
         if(!invalid){

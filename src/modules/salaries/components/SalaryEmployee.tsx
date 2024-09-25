@@ -77,7 +77,7 @@ const SalaryEmployee : FC<SalaryEmployeeProps> = ({employeeId}) => {
                 )
                 }
             </Card>
-            {isEditing && <EditSalaireDrawer employeeId={employeeId} close={()=>{setIsEditing(!isEditing);refetch()}}/>}
+            {isEditing && <EditSalaireDrawer lastChange={salaries[0]?.applicationDate} employeeId={employeeId} close={()=>{setIsEditing(!isEditing);refetch()}}/>}
             </>
     );
 };

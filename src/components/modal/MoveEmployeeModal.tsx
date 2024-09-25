@@ -1,7 +1,7 @@
 import { Button, Card } from 'antd';
 import React, { FC , useState , FormEvent} from 'react';
 import { FiCalendar, FiStopCircle, FiTrash, FiTrash2 } from 'react-icons/fi';
-import { showRequestError, showSuccessMessage } from '../../helpers';
+import { isValidDateRange, showRequestError, showSuccessMessage } from '../../helpers';
 import useEmployee from '../../hooks/useEmployee';
 import { ControlledDatePicker } from '../ui/ControlledInput';
 
@@ -19,12 +19,18 @@ const MoveEmployeeModal : FC<MoveModalProps> = ({close , id , refetch}) => {
 
     function handleSubmit(e : FormEvent){
         e.preventDefault()
-        moveEmployee({id ,leavingDate : date}).then((e : any)=>{
-            showSuccessMessage()
-            close()
-            refetch()
-        })
-        .catch((err : any)=>{showRequestError()})
+        const dErr = !isValidDateRange(new Date() , date) 
+        setDateError(dErr?'date invalide': '') 
+
+        const invalid = dErr
+        if(!invalid){
+            moveEmployee({id ,leavingDate : date}).then((e : any)=>{
+                showSuccessMessage()
+                close()
+                refetch()
+            })
+            .catch((err : any)=>{showRequestError()})
+        }
     }
     return (
         <div className='z-50 w-full min-h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>

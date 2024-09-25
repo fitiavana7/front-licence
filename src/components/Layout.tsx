@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 import { showSuccessMessage } from '../helpers';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { Button } from 'antd';
-import { FiUser } from 'react-icons/fi';
+import { FiHome, FiUser } from 'react-icons/fi';
 
 const Layout : FunctionComponent = () => {
     const { setUser , logout , user } = useCurrentUser()
@@ -49,6 +49,10 @@ const Layout : FunctionComponent = () => {
                             <button onClick={()=>goTo('/profile')} className='hover:bg-slate-200 hover:text-fond flex items-center justify-start outline-none focus:outline-none p-2 '>
                                 <span className='mr-2 text-blue-500 text-sm'><FaUser/></span>
                                 <h3 className='text-md font-bold'>{user?.name}</h3>
+                            </button>
+                            <button onClick={()=>goTo('/dashboard')} className='hover:bg-slate-200 hover:text-fond flex items-center justify-start outline-none focus:outline-none p-2 '>
+                                <span className='mr-2 text-blue-500 text-sm'><FiHome/></span>
+                                <h3 className='text-md font-bold'>Tableau de bord</h3>
                             </button>
                             <button onClick={handleLogout} className='hover:bg-slate-200 hover:text-fond flex items-center justify-start outline-none focus:outline-none p-2 '>
                                 <span className='text-red-500 text-md mr-2'><FaSignOutAlt/></span> 

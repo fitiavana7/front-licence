@@ -44,7 +44,7 @@ const LoginForm = () => {
                 setUser(req)
                 toast.success("Connection reussie")
                 setIsLoading(false)
-                navigate('/' , {replace : true})
+                navigate('/dashboard' , {replace : true})
 
             }).catch((e:any)=> {
                 setIsLoading(false)

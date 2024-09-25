@@ -6,7 +6,7 @@ import { FormEvent, useState } from 'react';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import useAuth from '../../hooks/useAuth';
 import { ICompany } from '../../types';
-import { showRequestError, showSuccessMessage } from '../../helpers';
+import { isValidEmail, isValidHireDate, showRequestError, showSuccessMessage } from '../../helpers';
 import { ControlledDatePicker, ControlledInput } from '../ui/ControlledInput';
 import MaskScreen from '../ui/MaskScreen';
 
@@ -28,25 +28,27 @@ const EditUserModal : React.FC<EditEmployeePropsType> = (props) => {
 
     const [dateError ,setDateError] = useState<string>('')
     const [nomError ,setNomError] = useState<string>('')
-    const [prenomsError ,setPrenomsError] = useState<string>('')
-    const [ageError ,setAgeError] = useState<string>('')
-    const [adressError ,setAdressError] = useState<string>('')
+    const [locationError ,setLocationError] = useState<string>('')
     const [phoneNumberError ,setPhoneNumberError] = useState<string>('')
     const [mailError ,setMailError] = useState<string>('')
     const [isLoading , setIsLoading] = useState<boolean>(false)
+    const { setUser } = useCurrentUser()
+    const { getCurrentUser } = useAuth()
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
         const nomErr = nom.length < 2 || nom.length > 50 
         setNomError(nomErr ?'nom invalide' : '')
-        const addrErr = location.length < 3 || location.length > 100 
-        setAdressError(addrErr? 'adresse invalide' : '') 
+        const locErr = location.length < 3 || location.length > 100 
+        setLocationError(locErr? 'location invalide' : '') 
         const phonErr = phone.length != 10
         setPhoneNumberError(phonErr?'telephone invalide' : '') 
-        const mailErr = mail.length < 2 || mail.length > 50
+        const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 
+        const dErr = !isValidHireDate(creationDate) 
+        setDateError(dErr?'date invalide': '') 
 
-        const invalid = nomErr || addrErr || phonErr || mailErr
+        const invalid = nomErr || locErr || phonErr || mailErr || dErr
         if(!invalid){
             setIsLoading(true)
             const data : ICompany = {
@@ -56,9 +58,11 @@ const EditUserModal : React.FC<EditEmployeePropsType> = (props) => {
                 phone , 
                 mail
             }
-            update( user?._id || '' ,data).then((e:any)=>{
+            update( user?._id || '' ,data).then(async(e:any)=>{
                 showSuccessMessage()
                 close()
+                const req = await getCurrentUser()
+                setUser(req)            
                 setIsLoading(false)
             }).catch((err:any)=> {
                 showRequestError()
@@ -90,7 +94,7 @@ const EditUserModal : React.FC<EditEmployeePropsType> = (props) => {
                             value={location}
                             placeholder='location'
                             onChange={setLocation}
-                            errorMessage={prenomsError}
+                            errorMessage={locationError}
                             icon={<FiMap/>}
 
                         />

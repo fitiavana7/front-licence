@@ -56,7 +56,7 @@ export const ControlledInputPassword : FC<ControlledInputType> = ({
                     type="password"
                     placeholder={placeholder}
                     value={value}
-                    className={`w-2/3 focus:text-white hover:text-white ${inputStyles()}`}
+                    className={`w-2/3 ${inputStyles()}`}
                     onChange={(e:any)=> { handleChange(e.target.value) }}
                 />
             </div>
@@ -87,7 +87,7 @@ export const ControlledInputNumber : FC<ControlledInputType> = ({
         <div className={`border w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaMailBulk className='mr-2' />{label}</h3>
             <InputNumber
-                className={`w-2/3 hover:text-white focus:text-white font-bold`}
+                className={`w-2/3 font-bold`}
                 placeholder={placeholder}
                 value={value}
                 onChange={(e)=> {
@@ -155,9 +155,11 @@ export const ControlledDatePicker : FC<Omit<ControlledInputType , 'value' > & { 
     onChange : handleChange , 
     label,
     classname,
-    value = new Date()
+    value,
+    errorMessage
     }) => {
     return (
+        <>
         <div className={`border-4 text-sm my-1 w-full border-white p-2 rounded-md flex justify-between items-center  ${classname}`}>
             <h3 className='flex w-1/3 items-center mr-2 text-primary font-bold'><FaCalendar className='mr-2' />{label}</h3>
             <DatePicker 
@@ -166,5 +168,7 @@ export const ControlledDatePicker : FC<Omit<ControlledInputType , 'value' > & { 
                 defaultValue={dayjs(value)}
             />
         </div>
-    );
+        { errorMessage.length > 0 && <span className='text-red-500 text-xs'>{errorMessage}</span> }
+    </>
+                    );
 };

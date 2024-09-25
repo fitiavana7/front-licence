@@ -86,13 +86,13 @@ const PayerModal : React.FC<PayerProps> = (props) => {
         const commErr = commentaire.length < 2 || commentaire.length > 150
         setCommentaireError(commErr?'commentaire invalide':'') 
 
-        const pErr = plus < 1  
-        setPlusError(titErr?'valeur prime invalide': '') 
-        const mErr = moins < 1
+        const pErr = aPlus === 'oui' && plus < 1  
+        setPlusError(pErr?'valeur prime invalide': '') 
+        const mErr = aMoins === 'oui' && moins < 1
         setMoinsError(mErr?'valeur decaissement invalide':'') 
-        const pDescErr = plusDescription.length < 2 || plusDescription.length > 100 
+        const pDescErr = aPlus === 'oui' && (plusDescription.length < 2 || plusDescription.length > 100 )
         setPlusDescError(pDescErr?'description invalide': '') 
-        const mDescErr = moinsDescription.length < 2 || moinsDescription.length > 100 
+        const mDescErr = aMoins === 'oui' && ( moinsDescription.length < 2 || moinsDescription.length > 100 )
         setMoinsDescError(mDescErr?'description invalide': '') 
 
         const invalid = titErr || commErr || mErr || pErr || pDescErr || mDescErr
@@ -146,7 +146,7 @@ const PayerModal : React.FC<PayerProps> = (props) => {
                     </div>
                     <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                         <h3 className='flex items-center text-primary font-bold'><FiMail className='mr-2' /> Salaire</h3>
-                        <span className='font-bold text-white'>{ formatCurrency(amount)}</span>
+                        <span className='font-bold text-white'>{ formatCurrency(amount)} ar</span>
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} method='post' className='my-2'>

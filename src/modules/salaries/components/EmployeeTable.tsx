@@ -73,23 +73,24 @@ const EmployeeTable : FC<EmployeeTableProps> = ({data , refetch , isCurrentEmplo
                         className='grid grid-cols-5 gap-1 cursor-pointer bg-white rounded-md my-1 hover:bg-gray-200' 
                         onClick={()=> {
                             if(isCurrentEmployees){
-                                navigate(`/employee/${user._id}`)
+                                navigate(`/employee/detail/${user._id}`)
                             }
                         }}
                     >
-                        <div className='p-2'>{user.firstName}</div>
+                        <div className='p-2'>{user.firstName.toLocaleUpperCase()}</div>
                         <div className='p-2'>{user.lastName}</div>
                         <div className='p-2'>{user.mail}</div>
                         <div className='p-2'>{user.phone}</div>
-                        <div className="p-2 flex items-center text-lg">
+                        <div className="p-2 flex items-center text-xl">
                             {isCurrentEmployees && (
                                 <>
-                                <span className='' onClick={(e)=> modifyEmp(e, user)}><FiEdit className='text-blue-500'/></span>
+                                <span className='' onClick={(e)=> modifyEmp(e, user)}>
+                                    <FiEdit className='hover:text-blue-600 text-blue-500'/></span>
                                 <span className='' onClick={(e)=>{
                                     e.stopPropagation()
                                     setIdToMove(user._id || '')
                                     setIsMoving(true)                                
-                                }}><FiStopCircle className='text-orange-500'/></span>
+                                }}><FiStopCircle className='hover:text-orange-600 text-orange-500'/></span>
                                 </>
                             )
                             }
@@ -99,13 +100,13 @@ const EmployeeTable : FC<EmployeeTableProps> = ({data , refetch , isCurrentEmplo
                                         e.stopPropagation()
                                         setEmployeeToView(user)
                                         setIsViewing(true)
-                                    }}><FiEye className='text-blue-500'/></span>
+                                    }}><FiEye className='text-blue-500 hover:text-blue-600'/></span>
 
                                     <span className='ml-2' onClick={(e)=> {
                                         e.stopPropagation()
                                         setIdToDelete(user._id || '')
                                         setIsDeleting(true)
-                                    }}><FiTrash className='text-red-500'/></span>
+                                    }}><FiTrash className='hover:text-red-600 text-red-500'/></span>
                                 </>
                             )    
                                 }                        

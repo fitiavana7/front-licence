@@ -11,8 +11,8 @@ const Sidebar = () => {
     return (
         <div className='w-1/6 bg-fond min-h-screen p-3 pt-14 text-white'>
             <div>
-            <Link to={'/'}>
-                <div className={`rounded-md flex justify-start items-center text-md my-2 font-bold w-full p-2 ${location.pathname == '/' && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
+            <Link to={'/dashboard'}>
+                <div className={`rounded-md flex justify-start items-center text-md my-2 font-bold w-full p-2 ${location.pathname == '/dashboard' && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
                     <FiHome /> <span className='ml-2'>Dashboard</span>
                 </div>
             </Link>    
@@ -21,7 +21,7 @@ const Sidebar = () => {
                     <FiUser /> <span className='ml-2'>Compte</span>
                 </div>
             </Link>    
-            <div onClick={()=> setShowDrop(!showDrop)} className={`rounded-md cursor-pointer flex justify-between items-center text-md my-2 font-bold w-full p-2 ${(location.pathname == '/employees/current' || location.pathname == '/employees/leaved' )  && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
+            <div onClick={()=> setShowDrop(!showDrop)} className={`rounded-md cursor-pointer flex justify-between items-center text-md my-2 font-bold w-full p-2 ${(location.pathname == '/employees/current' || location.pathname == '/employees/leaved' || location.pathname.includes('detail'))  && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
                 <div className='flex items-start'>
                 <FiUsers /> <span className='ml-2'>Salariés</span>
                 </div>
@@ -34,7 +34,7 @@ const Sidebar = () => {
             </div>
             { showDrop && <div className='ml-3'>
                 <Link to={'/employees/current'}>
-                    <div className={`rounded-md flex justify-start items-center text-md my-2 font-bold w-full p-2 ${(location.pathname == '/employees/current' )  && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
+                    <div className={`rounded-md flex justify-start items-center text-md my-2 font-bold w-full p-2 ${(location.pathname == '/employees/current' || location.pathname.includes('detail'))  && 'bg-primary text-white' } hover:border border border-transparent hover:border-white`}>
                         <FiUsers /> <span className='ml-2'>Salariés actuels</span>
                     </div>
                 </Link>

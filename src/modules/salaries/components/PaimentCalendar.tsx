@@ -129,6 +129,7 @@ const PaimentCalendar: React.FC<PaimentCalendarProps> = (props) => {
           date: "Date",
           time: "Heure",
           event: "Événement",
+          showMore : (count : number)=> `+${count} voir plus`,
           noEventsInRange: "Aucun événement dans cette plage",
         }}
         selectable

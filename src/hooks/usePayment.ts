@@ -27,6 +27,13 @@ export default function usePayment(){
         })
     }
 
+    function getTotalAmountCompany(id: string){
+        const token = localStorage.getItem(TOKEN_KEY)
+        return axios.get(`${PAYMENT_URL}/company-total/${id}` , {
+            headers : { Authorization: `Bearer ${token}` }
+        })
+    }
+
     function getPaymentsByWork(id : string) {
         const token = localStorage.getItem(TOKEN_KEY)
         return axios.get(`${PAYMENT_URL}/work/${id}` , {
@@ -41,5 +48,5 @@ export default function usePayment(){
         })
     }
 
-    return { create  , deletePayment , getPaymentsByCompany , getPaymentsByEmployee , getPaymentsByWork}
+    return { create  , deletePayment, getTotalAmountCompany , getPaymentsByCompany , getPaymentsByEmployee , getPaymentsByWork}
 }

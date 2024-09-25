@@ -25,7 +25,10 @@ import { ToastContainer, toast } from "react-toastify";
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <ToastContainer />
+    <ToastContainer 
+      autoClose={3000}
+      pauseOnHover={false}
+    />
   </React.StrictMode>,
   document.getElementById('root')
 );

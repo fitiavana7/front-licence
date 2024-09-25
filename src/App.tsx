@@ -44,7 +44,7 @@ const App  = () => {
            //for connected users
             <Route path='' element={<ConnectedLayout/>}>
               <Route path='' element={<AuthGuard/>}>
-                <Route index element={
+                <Route path='/dashboard' element={
                   <Suspense fallback={<Loader/>}>
                     <Dashboard/>
                   </Suspense>
@@ -93,7 +93,7 @@ const App  = () => {
                   </Suspense>
                 } />
 
-                <Route path='/employee/:id' element={
+                <Route path='/employee/detail/:id' element={
                   <Suspense fallback={<Loader/>}>
                     <EmployeeDetail/>
                   </Suspense>
@@ -114,7 +114,7 @@ const App  = () => {
                 </Suspense>  
                 } />
             </Route>
-            <Route path='/acceuil' element={
+            <Route index element={
               <Suspense fallback={<Loader/>}>
                 <Acceuil/>
               </Suspense>  

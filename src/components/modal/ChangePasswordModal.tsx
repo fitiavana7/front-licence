@@ -24,15 +24,20 @@ const ChangePasswordModal : React.FC<EditEmployeePropsType> = (props) => {
     const [pwd1 ,setPwd1] = useState<string>('')
     const [pwd2 ,setPwd2] = useState<string>('')
 
-    const [dateError ,setDateError] = useState<string>('')
-    const [nomError ,setNomError] = useState<string>('')
-    const [prenomsError ,setPrenomsError] = useState<string>('')
+    const [pwdError ,setPwdError] = useState<string>('')
+    const [pwd1Error ,setPwd1Error] = useState<string>('')
+    const [pwd2Error ,setPwd2Error] = useState<string>('')
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
     function handleSubmit(e:FormEvent) {
         e.preventDefault()
-
-        const invalid = false
+        const pwdErr = password.length < 6
+        const pwd1Err = pwd1.length < 6
+        const pwd2Err = pwd2 !== pwd1
+        setPwdError(pwdErr ?'mot de passe invalide' : '') 
+        setPwd1Error(pwd1Err ? 'mot de passe invalide' : '') 
+        setPwd2Error(pwd2Err ? 'le mot de passe doit être identique' : '') 
+        const invalid = pwdErr || pwd1Err || pwd2Err
         if(!invalid){
             setIsLoading(true)
             const data = {
@@ -44,7 +49,7 @@ const ChangePasswordModal : React.FC<EditEmployeePropsType> = (props) => {
                 close()
                 setIsLoading(false)
             }).catch((err:any)=> {
-                showRequestError()
+                showRequestError('Mot de passe actuel incorrect')
                 setIsLoading(false)
             })
         }
@@ -65,7 +70,7 @@ const ChangePasswordModal : React.FC<EditEmployeePropsType> = (props) => {
                             value={password}
                             placeholder='mot de passe actuel'
                             onChange={setPassword}
-                            errorMessage={nomError}
+                            errorMessage={pwdError}
                             icon={<FiLock/>}
                         />
                         <ControlledInputPassword
@@ -73,7 +78,7 @@ const ChangePasswordModal : React.FC<EditEmployeePropsType> = (props) => {
                             value={pwd1}
                             placeholder='nouveau mot de passe'
                             onChange={setPwd1}
-                            errorMessage={nomError}
+                            errorMessage={pwd1Error}
                             icon={<FiLock/>}
                         />
                         <ControlledInputPassword
@@ -81,7 +86,7 @@ const ChangePasswordModal : React.FC<EditEmployeePropsType> = (props) => {
                             value={pwd2}
                             placeholder='confirmer mot de passe'
                             onChange={setPwd2}
-                            errorMessage={nomError}
+                            errorMessage={pwd2Error}
                             icon={<FiLock/>}
                         />
                     </div>

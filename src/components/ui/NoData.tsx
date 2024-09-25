@@ -7,7 +7,7 @@ const NoData = () => {
             <div className='flex justify-center text-9xl'>
                 <FaFolderMinus />
             </div>
-            <h2 className='font-bold text-3xl text-center'>Aucun donnée à afficher.</h2>
+            <h2 className='font-bold text-3xl text-center'>Aucune donnée à afficher.</h2>
         </div>
     );
 };

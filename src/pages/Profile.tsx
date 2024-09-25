@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Card} from 'antd' 
 import { FaBuilding, FaCalendar, FaInfo, FaLocationArrow, FaMailBulk, FaPhone, FaUser } from 'react-icons/fa'
 import { useCurrentUser } from '../hooks/useCurrentUser';
@@ -7,11 +7,19 @@ import { fr } from 'date-fns/locale';
 import { FiCalendar, FiEdit, FiFacebook, FiInfo, FiLock, FiMail, FiMap, FiPhone, FiUser, FiUserCheck } from 'react-icons/fi';
 import EditUserModal from '../components/modal/EditUserModal';
 import ChangePasswordModal from '../components/modal/ChangePasswordModal';
+import useEmployee from '../hooks/useEmployee';
 
 const Profile = () => {
     const { user } = useCurrentUser()
+    const {getAll} = useEmployee()
     const [isModifying , setIsModifying] = useState<boolean>(false)
     const [isChangePwd , setIsChangePwd] = useState<boolean>(false)
+    const [count , setCount] = useState<number>(0)
+    useEffect(()=>{
+        getAll(user?._id || '').then((e)=>
+        setCount(e.data.length)
+        ).catch((err)=>{})
+    },[])
     return (
         <>
             { isModifying && <EditUserModal close={()=> setIsModifying(false)}/> }
@@ -22,7 +30,7 @@ const Profile = () => {
                         <FiUser className='text-7xl' />
                         <div className=''>
                             <span className='text-2xl font-bold text-blue-500'>{user?.name.toLocaleUpperCase()}</span>
-                            <h4 className='font-bold text-xl'>7 salariés</h4>
+                            <h4 className='font-bold text-xl'>{count} salariés</h4>
                         </div>
                     </div>
                     <div className='flex items-center'>

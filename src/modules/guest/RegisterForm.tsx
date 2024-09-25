@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { TOKEN_KEY } from '../../components/data/backend';
-import { inputStyles, isValidEmail, showRequestError, showSuccessMessage } from '../../helpers';
+import { inputStyles, isValidEmail, isValidHireDate, showRequestError, showSuccessMessage } from '../../helpers';
 import useAuth from '../../hooks/useAuth';
 import { Stepper , Step } from 'react-form-stepper'
 import { FaAngleLeft, FaAngleRight, FaBuilding, FaPlus, FaSave, FaUserEdit } from 'react-icons/fa' 
@@ -52,7 +52,7 @@ const RegisterForm = () => {
         setLieuError(lieuErr? 'location invalide' : '') 
         const nomErr = nom.length < 3 || nom.length > 100 
         setNomError(nomErr? 'nom invalide' : '') 
-        const crdErr = false
+        const crdErr = !isValidHireDate(creationDate)
         setCreationDateError(crdErr?'date invalide' : '') 
         const mailErr = !isValidEmail(mail)
         setMailError(mailErr?'mail invalide' : '') 

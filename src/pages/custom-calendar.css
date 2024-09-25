@@ -1,9 +1,9 @@
 /* Assure-toi que ce CSS est chargé après les styles de react-big-calendar */
 .rbc-month-view .rbc-day-bg {
-  position: relative;
-} 
-  
-.rbc-month-view .rbc-day-bg:hover {
-  @apply bg-blue-400 text-white cursor-pointer; /* Utilisation de Tailwind CSS avec @apply */
-}
-  
+    position: relative;
+  } 
+    
+  .rbc-month-view .rbc-day-bg:hover {
+    @apply bg-white text-white; /* Utilisation de Tailwind CSS avec @apply */
+  }
+    

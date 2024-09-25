@@ -88,7 +88,7 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
 
     return (
         <div className='z-50 w-full min-h-screen fixed top-0 left-0 flex justify-center items-center bg-[#000000c7]' onClick={close}>
-            <Card className={`animate-fadeIn w-1/2 max-h-[90vh] overflow-y-scroll`} onClick={(e : any)=>e.stopPropagation()}>
+            <Card className={`animate-fadeIn w-2/3 max-h-[90vh] overflow-y-scroll`} onClick={(e : any)=>e.stopPropagation()}>
                 <div id="pdf-content">
                     <div className='flex justify-between py-4'>
                         <span className='flex items-center font-bold text-2xl'>
@@ -134,7 +134,7 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
                                 <>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                                     <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Valeur prime ou bonus</h3>
-                                    <span className='font-bold'>{payment.plus} ar</span>
+                                    <span className='font-bold'>{formatCurrency(payment.plus)} ar</span>
                                 </div>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                                     <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Description du prime ou bonus</h3>
@@ -148,7 +148,7 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
                                 <>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                                     <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Valeur prime ou bonus</h3>
-                                    <span className='font-bold'>{payment.moins} ar</span>
+                                    <span className='font-bold'>{formatCurrency(payment.moins)} ar</span>
                                 </div>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
                                     <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Description du prime ou bonus</h3>

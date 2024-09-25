@@ -13,6 +13,16 @@ export function showSuccessMessage(msg? : string) {
     toast.success(msg || 'Requette reussie')
 }
 
+export function isValidHireDate(hireDate: Date): boolean {
+    const today = new Date();
+      return hireDate.getTime() < today.getTime()
+  }
+
+export function isValidDateRange(startDate: Date, endDate: Date): boolean {
+    return startDate.getTime() < endDate.getTime()
+}  
+  
+
 export function inputStyles(params?:string) {
     return `p-1 rounded-md outline-none focus:outline-blue-500 ${params}`
 }
