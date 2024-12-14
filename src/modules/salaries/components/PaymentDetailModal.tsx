@@ -147,11 +147,11 @@ const PaymentDetailModal : React.FC<PaymentDetailProps> = (props) => {
                             payment.haveMoins && (
                                 <>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
-                                    <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Valeur prime ou bonus</h3>
+                                    <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Valeur decaissement</h3>
                                     <span className='font-bold'>{formatCurrency(payment.moins)} ar</span>
                                 </div>
                                 <div className='border border-primary p-2 rounded-md flex justify-between items-center'>
-                                    <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Description du prime ou bonus</h3>
+                                    <h3 className='flex items-center text-primary font-bold'><FaMailBulk className='mr-2' /> Description decaissement</h3>
                                     <span className='font-bold'>{payment.moinsDescription}</span>
                                 </div>
                                 </>
